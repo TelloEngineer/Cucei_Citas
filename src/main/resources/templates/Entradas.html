@@ -27,7 +27,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         
         <div class="container">
             <div class="row"> 
-                <h1>lista de citas de entrada </h1>
+                <h1>lista de citas de entrada"</h1>
             </div>   
             <table class="table table-striped table-hover">
                 <tr th:if="${citas.isEmpty()}">
@@ -36,9 +36,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                  <thead class="table-dark">
                     <tr th:each="cita : ${citas}"> 
                     <td> 
-                        <a> hola: <small th:text="${cita.nombre}">hola</small> </a>
+                        <a> <h5>Id: <small th:utext="${cita.toString(cita.id)}" >Id</small></h5>  </a>
+                        <a> <b>Nombre del citado:</b> <small th:utext="${cita.getCitado().nombre}">Nombre</small> </a>
                         <br>
-                        <a> hola: <small th:text="${cita.fecha}">hola</small> </a>
+                        <a> <b>Fecha de la cita:</b> <small th:utext="${cita.getCitado().fecha}">Fecha</small> </a>
+                        <br>
+                        <a> <b>Hora de la cita:</b> <small th:utext="${cita.getCitado().hora}">Hora</small> </a>
+                        <br>
+                        <a> <b>Placas del vehiculo:</b> <small th:utext="${cita.getVehiculo().placas}">Placa</small> </a>
+                        <br>
+                        <a> <b>Marca del vehiculo:</b> <small th:utext="${cita.getVehiculo().marca}">Marca</small> </a>
+                        <br>
+                        <a> <b>Color del vehiculo:</b> <small th:utext="${cita.getVehiculo().color}">Color</small> </a>
+                        <br>
+                        <a> <b>Tipo del vehiculo:</b> <small th:utext="${cita.getVehiculo().tip}">Tipo</small> </a>
                         <br>
                     </td> 
                     </tr>

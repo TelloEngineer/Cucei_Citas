@@ -23,8 +23,12 @@ public class CitasService {
         return this.citas.getReferenceById(id);
     }
     
-    public List<CitasModel> getCitas(){
+    public List<CitasModel> getCitasByFecha(){
         return  this.citas.findAllByOrderByCitado_fechaAscCitado_hora();
+    }
+
+    public List<CitasModel> getCitas(){
+        return  this.citas.findAll();
     }
 
     public List<CitasModel> getByvehiculo(String placas){
@@ -36,7 +40,9 @@ public class CitasService {
     public List<CitasModel> getByentrada (int numero_puerta){
         return this.citas.findByentrada(numero_puerta);
     }
-    
+    public List<CitasModel> getByentradaByCitado(int numero_puerta){
+        return this.citas.findByentrada(numero_puerta);
+    }
     public Optional<CitasModel> getById(long id){
         return this.citas.findById(id);
     }
