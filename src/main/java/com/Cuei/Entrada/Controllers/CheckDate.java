@@ -6,7 +6,6 @@ package com.Cuei.Entrada.Controllers;
 
 
 import com.Cuei.Entrada.Databases.Cita.CitasService;
-import com.Cuei.Entrada.Databases.Citado.CitadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

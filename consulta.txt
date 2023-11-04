@@ -1,0 +1,15 @@
+{
+    "id": 1,
+    "citado":{
+        "nombre": "jose marron",
+        "fecha": "12:03:2024",
+        "hora": "10:40"
+    },
+    "vehiculo":{
+       "placas": "J02345H",
+       "marca": "Ford",
+       "color": "rojo",
+       "tipo": "Automovil"  
+    },
+    "entrada": 3
+}

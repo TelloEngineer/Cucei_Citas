@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Cuei.Entrada.Databases.Cita.CitasModel;
 import com.Cuei.Entrada.Databases.Cita.CitasService;
+import com.Cuei.Entrada.Databases.Citado.CitadoModel;
+import com.Cuei.Entrada.Databases.Citado.CitadoService;
+import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 
 /**
  *
@@ -28,21 +31,31 @@ import com.Cuei.Entrada.Databases.Cita.CitasService;
 @RequestMapping("/CitaCucei")
 public class RestApi {
     @Autowired
-    CitasService cita;
+    CitasService cita; 
+    @Autowired
+    CitadoService citado; 
+    @Autowired
+    VehiculoService vehiculo;
 
     @GetMapping()
-    public List<CitasModel> getProblemas(){
-        return this.cita.getCitas();
+    public List<CitasModel> getCitas(){
+        return this.cita.getCitasByFecha();
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<CitasModel> getAfectargadoById(@PathVariable("id") Long id) {
+    public Optional<CitasModel> getCitasById(@PathVariable("id") Long id) {
         return this.cita.getById(id);
     }
 
     @PostMapping()
-    public CitasModel saveQuejoso(@RequestBody CitasModel cita){
-            return this.cita.saveCitas(cita);
+    public CitasModel saveCita(@RequestBody CitasModel cita){
+        if(!this.citado.isThere(cita.getCitado().getNombre())){
+            this.citado.saveCitas(cita.getCitado());
+        }
+        if(!this.vehiculo.isThere(cita.getVehiculo().getPlacas())){
+            this.vehiculo.saveVehiculo(cita.getVehiculo());
+        }
+        return this.cita.saveCitas(cita);
     }
 
     @DeleteMapping( path = "/{id}")

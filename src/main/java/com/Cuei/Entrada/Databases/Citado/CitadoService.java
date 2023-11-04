@@ -20,6 +20,10 @@ public class CitadoService {
     public CitadoModel getcitado(String nombre_citado){
         return this.citado.getReferenceById(nombre_citado);
     }
+
+    public boolean isThere(String nombre_citado){
+        return this.citado.existsById(nombre_citado);
+    }
     
     public List<CitadoModel> getcitados(){
         return  this.citado.findAll();

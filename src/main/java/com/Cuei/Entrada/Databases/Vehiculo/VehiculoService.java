@@ -29,8 +29,12 @@ public class VehiculoService {
         return this.vehiculo.findById(placa);
     }
 
-    public VehiculoModel saveCitas(VehiculoModel vehiculo){
+    public VehiculoModel saveVehiculo(VehiculoModel vehiculo){
         return this.vehiculo.save(vehiculo);
+    }
+
+    public boolean isThere(String placa){
+        return this.vehiculo.existsById(placa);
     }
 
     public boolean deleteCitas(String placa){
