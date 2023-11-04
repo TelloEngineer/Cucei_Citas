@@ -41,7 +41,7 @@ public class CitasService {
         return this.citas.findByentrada(numero_puerta);
     }
     public List<CitasModel> getByentradaByCitado(int numero_puerta){
-        return this.citas.findByentrada(numero_puerta);
+        return this.citas.findByentradaOrderByCitado_fechaAscCitado_hora(numero_puerta);
     }
     public Optional<CitasModel> getById(long id){
         return this.citas.findById(id);
