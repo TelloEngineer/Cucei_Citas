@@ -49,10 +49,11 @@ public class RestApi {
 
     @PostMapping()
     public CitasModel saveCita(@RequestBody CitasModel cita){
+        //falta poner que revise si la cita no es repetida.
         if(!this.citado.isThere(cita.getCitado().getNombre())){
             this.citado.saveCitas(cita.getCitado());
         }
-        if(!this.vehiculo.isThere(cita.getVehiculo().getPlacas())){
+        if(this.vehiculo.isThere(cita.getVehiculo().getPlacas())){
             this.vehiculo.saveVehiculo(cita.getVehiculo());
         }
         return this.cita.saveCitas(cita);
