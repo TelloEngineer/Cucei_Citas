@@ -4,7 +4,6 @@
  */
 package com.Cuei.Entrada.Databases.Cita;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +40,7 @@ public class CitasService {
         return this.citas.findByentrada(numero_puerta);
     }
     public List<CitasModel> getByentradaByCitado(int numero_puerta){
-        return this.citas.findByentradaOrderByCitado_fechaAscCitado_hora(numero_puerta);
+        return this.citas.findByentradaOrderByCitado_fechaAscCitado_horaAsc(numero_puerta);
     }
     public Optional<CitasModel> getById(long id){
         return this.citas.findById(id);
@@ -60,13 +59,5 @@ public class CitasService {
         }   
     }
     
-    public static Comparator<CitasModel> sortbyCita = new Comparator<CitasModel>(){
-        @Override
-        public int compare(CitasModel o1, CitasModel o2) {
-            String fecha1 = o1.getCitado().getFecha() + " " + o1.getCitado().getHora();
-            String fecha2 = o2.getCitado().getFecha() + " " + o2.getCitado().getHora();
-            return fecha1.compareTo(fecha2);
-        }
-    };
     
 }

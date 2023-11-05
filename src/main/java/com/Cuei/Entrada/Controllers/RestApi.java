@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Cuei.Entrada.Databases.Cita.CitasModel;
 import com.Cuei.Entrada.Databases.Cita.CitasService;
-import com.Cuei.Entrada.Databases.Citado.CitadoModel;
 import com.Cuei.Entrada.Databases.Citado.CitadoService;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 
@@ -31,37 +30,36 @@ import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 @RequestMapping("/CitaCucei")
 public class RestApi {
     @Autowired
-    CitasService cita; 
+    CitasService citas; 
     @Autowired
-    CitadoService citado; 
+    CitadoService citados; 
     @Autowired
-    VehiculoService vehiculo;
+    VehiculoService vehiculos;
 
     @GetMapping()
     public List<CitasModel> getCitas(){
-        return this.cita.getCitasByFecha();
+        return this.citas.getCitasByFecha();
     }
 
     @GetMapping(path = "/{id}")
     public Optional<CitasModel> getCitasById(@PathVariable("id") Long id) {
-        return this.cita.getById(id);
+        return this.citas.getById(id);
     }
 
     @PostMapping()
     public CitasModel saveCita(@RequestBody CitasModel cita){
-        //falta poner que revise si la cita no es repetida.
-        if(!this.citado.isThere(cita.getCitado().getNombre())){
-            this.citado.saveCitas(cita.getCitado());
+        if(!this.citados.isThere(cita.getId())){
+            this.citados.saveCitas(cita.getCitado());
         }
-        if(this.vehiculo.isThere(cita.getVehiculo().getPlacas())){
-            this.vehiculo.saveVehiculo(cita.getVehiculo());
+        if(!this.vehiculos.isThere(cita.getVehiculo().getPlacas())){
+            this.vehiculos.saveVehiculo(cita.getVehiculo());
         }
-        return this.cita.saveCitas(cita);
+        return this.citas.saveCitas(cita);
     }
 
     @DeleteMapping( path = "/{id}")
     public String deleteById(@PathVariable("id") Long id){
-        boolean ok = this.cita.deleteCitas(id);
+        boolean ok = this.citas.deleteCitas(id);
         if(ok){
             return "Se elimino el afectado con el id: " + Long.toString(id);
         }else{

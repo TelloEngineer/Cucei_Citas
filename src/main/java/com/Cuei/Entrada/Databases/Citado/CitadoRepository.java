@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
  * @author josue
  */
 @Repository
-public interface CitadoRepository extends JpaRepository<CitadoModel,String>{
+public interface CitadoRepository extends JpaRepository<CitadoModel,Long>{
     
 }

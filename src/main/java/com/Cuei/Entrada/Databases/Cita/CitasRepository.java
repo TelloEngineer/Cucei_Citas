@@ -17,6 +17,7 @@ public interface CitasRepository extends JpaRepository<CitasModel,Long>{
     public abstract List<CitasModel> findByvehiculo_placas (String placas);
     public abstract List<CitasModel> findBycitado_nombre (String nombre);
     public abstract List<CitasModel> findByentrada (int numero_puerta);
-    public abstract List<CitasModel> findByentradaOrderByCitado_fechaAscCitado_hora(int numero_puerta);
+    public abstract List<CitasModel> findByentradaOrderByCitado_fechaAscCitado_horaAsc(int numero_puerta);
     public abstract List<CitasModel> findAllByOrderByCitado_fechaAscCitado_hora();
+    //public abstract boolean existsById(nombre_citado); 
 }

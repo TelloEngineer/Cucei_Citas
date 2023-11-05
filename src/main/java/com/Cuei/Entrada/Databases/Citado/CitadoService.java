@@ -17,28 +17,28 @@ import org.springframework.stereotype.Service;
 public class CitadoService {
     @Autowired
     CitadoRepository citado;
-    public CitadoModel getcitado(String nombre_citado){
-        return this.citado.getReferenceById(nombre_citado);
+    public CitadoModel getcitado(Long id){
+        return this.citado.getReferenceById(id);
     }
 
-    public boolean isThere(String nombre_citado){
-        return this.citado.existsById(nombre_citado);
+    public boolean isThere(Long id){
+        return this.citado.existsById(id);
     }
     
     public List<CitadoModel> getcitados(){
         return  this.citado.findAll();
     }
-     public Optional<CitadoModel> getById(String nombre_citado){
-        return this.citado.findById(nombre_citado);
+     public Optional<CitadoModel> getById(Long id){
+        return this.citado.findById(id);
     }
 
     public CitadoModel saveCitas(CitadoModel citado){
         return this.citado.save(citado);
     }
 
-    public boolean deleteCitas(String nombre_citado){
+    public boolean deleteCitas(Long id){
         try{
-            this.citado.deleteById(nombre_citado);
+            this.citado.deleteById(id);
             return true;
         }catch(Exception error){
             return false;

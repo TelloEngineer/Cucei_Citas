@@ -6,6 +6,7 @@ package com.Cuei.Entrada.Databases.Citado;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,9 @@ import org.hibernate.annotations.NaturalIdCache;
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
-    @Id @Column(unique = true, nullable = false, name = "nombre_persona")
+    @Id @GeneratedValue @Column(unique = true, nullable = false, name = "idCitas")
+    private Long id;
+    @Column(unique = false, nullable = false, name = "nombre_persona")
     private String nombre;
     @Column(unique = false, nullable = false, name = "Fecha_cita")
     private String fecha;
