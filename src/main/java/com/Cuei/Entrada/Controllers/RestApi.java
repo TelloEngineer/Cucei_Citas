@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Cuei.Entrada.Databases.Cita.CitasModel;
 import com.Cuei.Entrada.Databases.Cita.CitasService;
+import com.Cuei.Entrada.Databases.Citado.CitadoModel;
 import com.Cuei.Entrada.Databases.Citado.CitadoService;
+import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 
 /**
@@ -48,9 +50,13 @@ public class RestApi {
 
     @PostMapping()
     public CitasModel saveCita(@RequestBody CitasModel cita){
-        if(!this.citados.isThere(cita.getId())){
-            this.citados.saveCitas(cita.getCitado());
+        //NOTA: no permitir a ninguna edicion, no tener id.
+        System.out.println("es clonado: " + this.citados.isCloned(cita.getCitado()));
+
+        if(this.citados.isCloned(cita.getCitado())){
+           return null;
         }
+        this.citados.saveCitado(cita.getCitado());
         if(!this.vehiculos.isThere(cita.getVehiculo().getPlacas())){
             this.vehiculos.saveVehiculo(cita.getVehiculo());
         }

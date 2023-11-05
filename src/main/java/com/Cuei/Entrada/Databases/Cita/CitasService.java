@@ -33,7 +33,7 @@ public class CitasService {
     public List<CitasModel> getByvehiculo(String placas){
         return this.citas.findByvehiculo_placas(placas);
     }
-    public List<CitasModel> getBycitado (String nombre){
+    public List<CitasModel> getBycitado(String nombre){
         return this.citas.findBycitado_nombre(nombre);
     }
     public List<CitasModel> getByentrada (int numero_puerta){
