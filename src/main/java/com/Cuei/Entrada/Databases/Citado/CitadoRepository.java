@@ -5,6 +5,9 @@
 package com.Cuei.Entrada.Databases.Citado;
 
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -15,6 +18,6 @@ import java.util.List;
 
 @Repository
 public interface CitadoRepository extends JpaRepository<CitadoModel,Long>{
-    public abstract boolean existsByNombreAndFechaAndHora(String nombre, String fecha, String hora);
-    public abstract List<CitadoModel> findByNombreAndFechaAndHora(String nombre, String fecha, String hora);
+    public abstract boolean existsByNombreAndFechaAndHora(String nombre, LocalDate fecha, LocalTime hora);
+    public abstract List<CitadoModel> findByNombreAndFechaAndHora(String nombre, LocalDate fecha, LocalTime hora);
 }

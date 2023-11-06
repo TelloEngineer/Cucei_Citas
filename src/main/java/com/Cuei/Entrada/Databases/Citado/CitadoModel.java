@@ -4,11 +4,14 @@
  */
 package com.Cuei.Entrada.Databases.Citado;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,7 +35,9 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
     @Column(unique = false, nullable = false, name = "nombre_persona")
     private String nombre;
     @Column(unique = false, nullable = false, name = "Fecha_cita")
-    private String fecha;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
+    private LocalDate fecha;
     @Column(unique = false, nullable = false, name = "Hora_cita")
-    private String hora;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
+    private LocalTime hora;
 }
