@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -19,19 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CheckDate {
     @Autowired
     CitasService citas;
-    @GetMapping("/Entrada_1")
-    public String entrada1(Model model) {
-        model.addAttribute("citas", citas.getByentradaByCitado(1));
-        return "Entradas";
-    }
-    @GetMapping("/Entrada_2")
-    public String entrada2(Model model) {
-        model.addAttribute("citas", citas.getByentradaByCitado(2));
-        return "Entradas";
-    }
-    @GetMapping("/Entrada_3")
-    public String entrada3(Model model) {
-        model.addAttribute("citas", citas.getByentradaByCitado(3));
+    @GetMapping("/Entrada")
+    public String entrada1(Model model, @RequestParam int n) {
+        model.addAttribute("citas", citas.getByentradaByCitado(n));
         return "Entradas";
     }
 }

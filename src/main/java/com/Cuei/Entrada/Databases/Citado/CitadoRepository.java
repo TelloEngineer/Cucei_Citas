@@ -7,7 +7,6 @@ package com.Cuei.Entrada.Databases.Citado;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

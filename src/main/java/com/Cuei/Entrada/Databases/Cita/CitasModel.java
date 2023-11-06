@@ -14,7 +14,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -50,7 +49,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitasModel {
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     private CitadoModel citado; //relacion many(citas) to one (citado)
    
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @JoinColumn(name = "placa_vehiculo") //se crea una columna, donde se guarda el foreign key

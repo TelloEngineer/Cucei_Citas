@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Cuei.Entrada.Databases.Cita.CitasModel;
 import com.Cuei.Entrada.Databases.Cita.CitasService;
-import com.Cuei.Entrada.Databases.Citado.CitadoModel;
 import com.Cuei.Entrada.Databases.Citado.CitadoService;
-import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 
 /**
