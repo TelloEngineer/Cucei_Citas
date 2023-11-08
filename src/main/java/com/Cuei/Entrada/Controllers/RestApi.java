@@ -5,7 +5,6 @@
 package com.Cuei.Entrada.Controllers;
 
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -49,13 +48,11 @@ public class RestApi {
     public String saveCita(@RequestBody CitadoModel cita){
         //NOTA: no permitir a ninguna edicion, no tener id.
         System.out.println("es clonado: " + this.citados.isCloned(cita));
-        
-        
-        LocalDateTime now = LocalDateTime.now().with(LocalTime.now().of(LocalDateTime.now().getHour(), LocalDateTime.now().getMinute())); 
-        cita.setHoradelete(LocalTime.now().with(cita.getHora().plusMinutes(15)));
+
         if(!this.vehiculos.isThere(cita.getVehiculo().getPlacas())){
             this.vehiculos.saveVehiculo(cita.getVehiculo());
         }
+        cita.setHoradelete(LocalTime.now().with(cita.getHora().plusMinutes(15)));
         if(this.citados.isCloned(cita)){
            return "1 La cita ya existe, con la misma persona";
         }
@@ -72,7 +69,6 @@ public class RestApi {
         CitadoModel citado = this.citados.getcitado(id);
         boolean ok = this.citados.deleteCitado(id);
         if(ok){
-            this.vehiculos.deleteVehiculo(citado.getVehiculo().getPlacas());
             return "Se elimino la cita con el id: " + Long.toString(id);
         }else{
             return "No se encontro la cita con el id: " + Long.toString(id) + " para elminar";

@@ -4,13 +4,16 @@
  */
 package com.Cuei.Entrada.Databases.Vehiculo;
 
+import com.Cuei.Entrada.Databases.Citado.CitadoModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalIdCache;
@@ -34,4 +37,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class VehiculoModel {
     private String color;
     @Column(unique = false, nullable = false, name = "tipo_vehiculo")
     private String tipo;
+    
+    @OneToOne(mappedBy = "vehiculo", orphanRemoval = true) // name attribute in citado
+    @ToString.Exclude CitadoModel citado;
 }
