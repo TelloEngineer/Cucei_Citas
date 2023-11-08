@@ -9,6 +9,7 @@ import java.time.LocalTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 /**
  *
  * @author josue
@@ -23,5 +24,5 @@ public interface CitadoRepository extends JpaRepository<CitadoModel,Long>{
     public abstract List<CitadoModel> findBynombre (String nombre);
     public abstract List<CitadoModel> findByentradaOrderByFechaAscHoraAsc(int entrada);
     public abstract List<CitadoModel> findAllByOrderByFechaAscHora();
-    
+    public abstract Optional<CitadoModel> findByFechaIsAndHoradeleteGreaterThanEqual(LocalDate fecha, LocalTime horadelete);
 }

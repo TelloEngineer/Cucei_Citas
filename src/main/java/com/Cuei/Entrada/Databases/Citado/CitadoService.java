@@ -4,6 +4,8 @@
  */
 package com.Cuei.Entrada.Databases.Citado;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -55,9 +57,14 @@ public class CitadoService {
         return  this.citado.findAllByOrderByFechaAscHora();
     }
     
+    public Optional<CitadoModel> findAfter15Min(){
+        LocalDateTime dateTime = LocalDateTime.now();
+        return this.citado.findByFechaIsAndHoradeleteGreaterThanEqual(dateTime.toLocalDate(), dateTime.toLocalTime());
+    }
+    
     public CitadoModel saveCitado(CitadoModel citado){
-        citado.setHora_to_delete(LocalTime.now().with(citado.getHora().plusMinutes(15)));
-        System.out.println(citado.getHora_to_delete().isBefore(LocalTime.now()));
+        citado.setHoradelete(LocalTime.now().with(citado.getHora().plusMinutes(15)));
+        System.out.println(citado.getHoradelete().isBefore(LocalTime.now()));
         return this.citado.save(citado);
     }
 

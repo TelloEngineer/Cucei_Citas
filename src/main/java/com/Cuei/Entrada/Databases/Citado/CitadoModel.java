@@ -64,7 +64,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
     
     @JsonIgnore
     @Column(unique = false, nullable = false, name = "Hora_delete")
-    private LocalTime hora_to_delete;
+    private LocalTime horadelete;
     
 
 }

@@ -50,9 +50,9 @@ public class RestApi {
         //NOTA: no permitir a ninguna edicion, no tener id.
         System.out.println("es clonado: " + this.citados.isCloned(cita));
         
-        LocalDateTime s = LocalDateTime.of(cita.getFecha(), cita.getHora().plusMinutes(15));
+        
         LocalDateTime now = LocalDateTime.now().with(LocalTime.now().of(LocalDateTime.now().getHour(), LocalDateTime.now().getMinute())); 
-        cita.setHora_to_delete(LocalTime.now().with(cita.getHora().plusMinutes(15)));
+        cita.setHoradelete(LocalTime.now().with(cita.getHora().plusMinutes(15)));
         if(!this.vehiculos.isThere(cita.getVehiculo().getPlacas())){
             this.vehiculos.saveVehiculo(cita.getVehiculo());
         }
