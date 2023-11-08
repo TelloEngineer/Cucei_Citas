@@ -37,7 +37,7 @@ public class VehiculoService {
         return this.vehiculo.existsById(placa);
     }
 
-    public boolean deleteCitas(String placa){
+    public boolean deleteVehiculo(String placa){
         try{
             this.vehiculo.deleteById(placa);
             return true;

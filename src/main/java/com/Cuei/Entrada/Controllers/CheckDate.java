@@ -5,7 +5,7 @@
 package com.Cuei.Entrada.Controllers;
 
 
-import com.Cuei.Entrada.Databases.Cita.CitasService;
+import com.Cuei.Entrada.Databases.Citado.CitadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class CheckDate {
     @Autowired
-    CitasService citas;
+    CitadoService citado;
     @GetMapping("/Entrada")
-    public String entrada1(Model model, @RequestParam int n) {
-        model.addAttribute("citas", citas.getByentradaByCitado(n));
+    public String entrada(Model model, @RequestParam int n) {
+        model.addAttribute("citados", citado.getByentradaByCitado(n));
         return "Entradas";
     }
 }

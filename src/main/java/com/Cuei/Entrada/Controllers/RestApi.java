@@ -5,6 +5,8 @@
 package com.Cuei.Entrada.Controllers;
 
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Cuei.Entrada.Databases.Cita.CitasModel;
-import com.Cuei.Entrada.Databases.Cita.CitasService;
+import com.Cuei.Entrada.Databases.Citado.CitadoModel;
 import com.Cuei.Entrada.Databases.Citado.CitadoService;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 
@@ -30,44 +31,51 @@ import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 @RequestMapping("/CitaCucei")
 public class RestApi {
     @Autowired
-    CitasService citas; 
-    @Autowired
     CitadoService citados; 
     @Autowired
     VehiculoService vehiculos;
 
     @GetMapping()
-    public List<CitasModel> getCitas(){
-        return this.citas.getCitasByFecha();
+    public List<CitadoModel> getCitas(){
+        return this.citados.getCitasByFecha();
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<CitasModel> getCitasById(@PathVariable("id") Long id) {
-        return this.citas.getById(id);
+    public Optional<CitadoModel> getCitasById(@PathVariable("id") Long id) {
+        return this.citados.getById(id);
     }
 
     @PostMapping()
-    public CitasModel saveCita(@RequestBody CitasModel cita){
+    public String saveCita(@RequestBody CitadoModel cita){
         //NOTA: no permitir a ninguna edicion, no tener id.
-        System.out.println("es clonado: " + this.citados.isCloned(cita.getCitado()));
-
-        if(this.citados.isCloned(cita.getCitado())){
-           return null;
-        }
-        this.citados.saveCitado(cita.getCitado());
+        System.out.println("es clonado: " + this.citados.isCloned(cita));
+        
+        LocalDateTime s = LocalDateTime.of(cita.getFecha(), cita.getHora().plusMinutes(15));
+        LocalDateTime now = LocalDateTime.now().with(LocalTime.now().of(LocalDateTime.now().getHour(), LocalDateTime.now().getMinute())); 
+        cita.setHora_to_delete(LocalTime.now().with(cita.getHora().plusMinutes(15)));
         if(!this.vehiculos.isThere(cita.getVehiculo().getPlacas())){
             this.vehiculos.saveVehiculo(cita.getVehiculo());
         }
-        return this.citas.saveCitas(cita);
+        if(this.citados.isCloned(cita)){
+           return "1 La cita ya existe, con la misma persona";
+        }
+        try{
+            this.citados.saveCitado(cita);
+            return "0 cita guardada con exito";
+        }catch(Exception e){
+            return "2" + e.getMessage();
+        }
     }
 
     @DeleteMapping( path = "/{id}")
     public String deleteById(@PathVariable("id") Long id){
-        boolean ok = this.citas.deleteCitas(id);
+        CitadoModel citado = this.citados.getcitado(id);
+        boolean ok = this.citados.deleteCitado(id);
         if(ok){
-            return "Se elimino el afectado con el id: " + Long.toString(id);
+            this.vehiculos.deleteVehiculo(citado.getVehiculo().getPlacas());
+            return "Se elimino la cita con el id: " + Long.toString(id);
         }else{
-            return "No se encontro el afectado con el id: " + Long.toString(id) + " para elminar";
+            return "No se encontro la cita con el id: " + Long.toString(id) + " para elminar";
         }
 
     }

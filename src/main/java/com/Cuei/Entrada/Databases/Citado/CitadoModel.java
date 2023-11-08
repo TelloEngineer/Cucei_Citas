@@ -4,11 +4,18 @@
  */
 package com.Cuei.Entrada.Databases.Citado;
 
+import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -18,6 +25,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalIdCache;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  *
@@ -30,14 +39,32 @@ import org.hibernate.annotations.NaturalIdCache;
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
-    @Id @GeneratedValue @Column(unique = true, nullable = false, name = "idCitas")
+    @Id @GeneratedValue @Column(unique = true, nullable = false, name = "idCitado")
     private Long id;
+    
     @Column(unique = false, nullable = false, name = "nombre_persona")
     private String nombre;
+    
     @Column(unique = false, nullable = false, name = "Fecha_cita")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private LocalDate fecha;
+    
     @Column(unique = false, nullable = false, name = "Hora_cita")
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
     private LocalTime hora;
+    
+    @OneToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @JoinColumn(name = "placa_vehiculo") //se crea una columna, donde se guarda el foreign key
+    private VehiculoModel vehiculo; //relacion many(citas) to one (vehiculo) 
+    
+    @Column(unique = false, nullable = false, name = "puerta_entrada")
+    private int entrada;
+    
+    @JsonIgnore
+    @Column(unique = false, nullable = false, name = "Hora_delete")
+    private LocalTime hora_to_delete;
+    
+
 }
