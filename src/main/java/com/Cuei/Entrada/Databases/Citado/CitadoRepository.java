@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
 /**
  *
  * @author josue
@@ -20,9 +21,17 @@ public interface CitadoRepository extends JpaRepository<CitadoModel,Long>{
     public abstract boolean existsByNombreAndFechaAndHora(String nombre, LocalDate fecha, LocalTime hora);
     public abstract List<CitadoModel> findByNombreAndFechaAndHora(String nombre, LocalDate fecha, LocalTime hora);
     public abstract List<CitadoModel> findByvehiculo_placas (String placas);
+    
     public abstract List<CitadoModel> findByentrada (int numero_puerta);
     public abstract List<CitadoModel> findBynombre (String nombre);
+    
     public abstract List<CitadoModel> findByentradaOrderByFechaAscHoraAsc(int entrada);
     public abstract List<CitadoModel> findAllByOrderByFechaAscHora();
-    public abstract Optional<CitadoModel> findByFechaIsAndHoradeleteGreaterThanEqual(LocalDate fecha, LocalTime horadelete);
+    
+    
+    @Query(value = "select c.id from CitadoModel c WHERE c.fecha = ?1 and c.horadelete <= ?2")
+    public abstract List<Long> findIdByFechaAndHoradeleteBefore(LocalDate fecha, LocalTime horadelete);
+    public abstract List<CitadoModel> findByFecha(LocalDate fecha);
+    
+    public abstract void deleteByIdIn(List <Long> Ids);
 }

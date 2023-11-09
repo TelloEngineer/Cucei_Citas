@@ -4,6 +4,8 @@
  */
 package com.Cuei.Entrada.Databases.Citado;
 
+import jakarta.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -56,17 +58,34 @@ public class CitadoService {
         return  this.citado.findAllByOrderByFechaAscHora();
     }
     
-    public Optional<CitadoModel> findAfter15Min(){
+    public List<Long> findAfter15Min(){
         LocalDateTime dateTime = LocalDateTime.now();
-        return this.citado.findByFechaIsAndHoradeleteGreaterThanEqual(dateTime.toLocalDate(), dateTime.toLocalTime());
+        try{
+            System.out.println("hola: " + this.citado.findByFecha( dateTime.toLocalDate()));
+            return this.citado.findIdByFechaAndHoradeleteBefore(dateTime.toLocalDate(), dateTime.toLocalTime());
+        }catch(Exception error){
+            return null;
+        } 
     }
     
     public CitadoModel saveCitado(CitadoModel citado){
         citado.setHoradelete(LocalTime.now().with(citado.getHora().plusMinutes(15)));
-        System.out.println(citado.getHoradelete().isBefore(LocalTime.now()));
+        System.out.println(citado.getHoradelete() + " - " +LocalTime.now());
         return this.citado.save(citado);
     }
 
+    @Transactional
+    public boolean deleteCitados(List <Long> ids){
+        if(ids == null){
+            return false;
+        }
+        boolean isEmpty = ids.isEmpty();
+        if(!isEmpty){
+           this.citado.deleteByIdIn(ids); 
+        }
+        return isEmpty;      
+    }
+    
     public boolean deleteCitado(Long id){
         try{
             this.citado.deleteById(id);

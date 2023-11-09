@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CheckDate {
     @Autowired
     CitadoService citados;
-    @Autowired
-    VehiculoService vehiculos;
     
     @GetMapping("/Entrada")
     public String entrada(Model model, @RequestParam int n) {
@@ -33,5 +31,6 @@ public class CheckDate {
     
     private void deleteLateAppointment(){
         System.out.println(citados.findAfter15Min());
+        citados.deleteCitados(citados.findAfter15Min());
     }
 }

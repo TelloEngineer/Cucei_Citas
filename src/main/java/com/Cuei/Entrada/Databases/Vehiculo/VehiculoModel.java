@@ -5,6 +5,7 @@
 package com.Cuei.Entrada.Databases.Vehiculo;
 
 import com.Cuei.Entrada.Databases.Citado.CitadoModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -39,5 +40,6 @@ public @Data @AllArgsConstructor @NoArgsConstructor class VehiculoModel {
     private String tipo;
     
     @OneToOne(mappedBy = "vehiculo", orphanRemoval = true) // name attribute in citado
+    @JsonIgnore
     @ToString.Exclude CitadoModel citado;
 }
