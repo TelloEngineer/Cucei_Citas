@@ -6,12 +6,13 @@ package com.Cuei.Entrada.Controllers;
 
 
 import com.Cuei.Entrada.Databases.Citado.CitadoService;
-import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -19,18 +20,27 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class CheckDate {
+    private int n;
+    private  RestTemplate restTemplate = new RestTemplate();
     @Autowired
     CitadoService citados;
     
     @GetMapping("/Entrada")
     public String entrada(Model model, @RequestParam int n) {
-        this.deleteLateAppointment(); // delete after 15 minutes
-        model.addAttribute("citados", citados.getByentradaByCitado(n));
+        this.n = n;
+        this.deleteLateAppointment();
+        model.addAttribute("citados", citados.getByentradaByCitado(this.n));
         return "Entradas";
     }
     
+    //@Scheduled(cron = "0 */1 * ? * *")
     private void deleteLateAppointment(){
-        System.out.println(citados.findAfter15Min());
         citados.deleteCitados(citados.findAfter15Min());
     }
+    
+    /*@Scheduled(fixedRate = 500)
+    private void reload(){
+        String result = restTemplate.getForObject("http://localhost:8080/Entrada?n={hotel}", String.class, this.n);
+        System.out.println(result);
+    }*/
 }
