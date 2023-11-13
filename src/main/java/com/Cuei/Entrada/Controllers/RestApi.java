@@ -36,11 +36,13 @@ public class RestApi {
 
     @GetMapping()
     public List<CitadoModel> getCitas(){
+    	citados.deleteCitados(citados.findAfter15Min());
         return this.citados.getCitasByFecha();
     }
 
     @GetMapping(path = "/{id}")
     public Optional<CitadoModel> getCitasById(@PathVariable("id") Long id) {
+    	citados.deleteCitados(citados.findAfter15Min());
         return this.citados.getById(id);
     }
 

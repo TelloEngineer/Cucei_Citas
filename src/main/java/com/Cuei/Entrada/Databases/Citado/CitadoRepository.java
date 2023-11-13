@@ -19,7 +19,6 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface CitadoRepository extends JpaRepository<CitadoModel,Long>{
     public abstract boolean existsByNombreAndFechaAndHora(String nombre, LocalDate fecha, LocalTime hora);
-    public abstract List<CitadoModel> findByNombreAndFechaAndHora(String nombre, LocalDate fecha, LocalTime hora);
     public abstract List<CitadoModel> findByvehiculo_placas (String placas);
     
     public abstract List<CitadoModel> findByentrada (int numero_puerta);

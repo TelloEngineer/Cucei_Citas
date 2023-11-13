@@ -40,7 +40,7 @@ import org.hibernate.annotations.OnDeleteAction;
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
-    @Id @GeneratedValue @Column(unique = true, nullable = false, name = "idCitado")
+    @Id @GeneratedValue @Column(unique = true, nullable = false, name = "id")
     private Long id;
     
     @Column(unique = false, nullable = false, name = "nombre_persona")

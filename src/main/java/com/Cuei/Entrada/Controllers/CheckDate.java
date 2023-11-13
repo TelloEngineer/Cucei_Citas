@@ -30,6 +30,7 @@ public class CheckDate {
         this.n = n;
         this.deleteLateAppointment();
         model.addAttribute("citados", citados.getByentradaByCitado(this.n));
+        model.addAttribute("tolerancia", citados.getCitasByFecha());
         return "Entradas";
     }
     
