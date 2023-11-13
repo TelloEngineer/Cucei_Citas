@@ -50,8 +50,8 @@ public class CitadoService {
     public List<CitadoModel> getByentrada (int numero_puerta){
         return this.citado.findByentrada(numero_puerta);
     }
-    public List<CitadoModel> getByentradaByCitado(int numero_puerta){
-        return this.citado.findByentradaOrderByFechaAscHoraAsc(numero_puerta);
+    public List<CitadoModel> getCitaBeforeCita(LocalDate fecha, LocalTime hora,int numero_puerta){
+        return this.citado.findByentradaBeforeCita(fecha,hora,numero_puerta);
     }
     
     public List<CitadoModel> getCitasByFecha(){
@@ -61,7 +61,6 @@ public class CitadoService {
     public List<Long> findAfter15Min(){
         LocalDateTime dateTime = LocalDateTime.now();
         try{
-            System.out.println("hola: " + this.citado.findByFecha( dateTime.toLocalDate()));
             return this.citado.findIdByFechaAndHoradeleteBefore(dateTime.toLocalDate(), dateTime.toLocalTime());
         }catch(Exception error){
             return null;

@@ -6,6 +6,9 @@ package com.Cuei.Entrada.Controllers;
 
 
 import com.Cuei.Entrada.Databases.Citado.CitadoService;
+
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
@@ -29,7 +32,8 @@ public class CheckDate {
     public String entrada(Model model, @RequestParam int n) {
         this.n = n;
         this.deleteLateAppointment();
-        model.addAttribute("citados", citados.getByentradaByCitado(this.n));
+        LocalDateTime now = LocalDateTime.now();
+        model.addAttribute("citados", citados.getCitaBeforeCita(now.toLocalDate(), now.toLocalTime(),this.n));
         model.addAttribute("tolerancia", citados.getCitasByFecha());
         return "Entradas";
     }
