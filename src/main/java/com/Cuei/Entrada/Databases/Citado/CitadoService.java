@@ -54,6 +54,10 @@ public class CitadoService {
         return this.citado.findByentradaBeforeCita(fecha,hora,numero_puerta);
     }
     
+    public List<CitadoModel> getCitaAfterCita(LocalDate fecha, LocalTime hora,int numero_puerta){
+        return this.citado.findByentradaAfterCita(fecha,hora,numero_puerta);
+    }
+
     public List<CitadoModel> getCitasByFecha(){
         return  this.citado.findAllByOrderByFechaAscHora();
     }

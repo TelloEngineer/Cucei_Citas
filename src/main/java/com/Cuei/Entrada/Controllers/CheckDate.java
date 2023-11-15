@@ -34,7 +34,7 @@ public class CheckDate {
         this.deleteLateAppointment();
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("citados", citados.getCitaBeforeCita(now.toLocalDate(), now.toLocalTime(),this.n));
-        model.addAttribute("tolerancia", citados.getCitasByFecha());
+        model.addAttribute("tolerancia", citados.getCitaAfterCita(now.toLocalDate(), now.toLocalTime(),this.n));
         return "Entradas";
     }
     
