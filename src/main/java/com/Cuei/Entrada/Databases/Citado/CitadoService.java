@@ -51,11 +51,11 @@ public class CitadoService {
         return this.citado.findByentrada(numero_puerta);
     }
     public List<CitadoModel> getCitaBeforeCita(LocalDate fecha, LocalTime hora,int numero_puerta){
-        return this.citado.findByentradaBeforeCita(fecha,hora,numero_puerta);
+        return this.citado.findByentradaBeforeCita(fecha,hora.minusMinutes(1),numero_puerta);
     }
     
     public List<CitadoModel> getCitaAfterCita(LocalDate fecha, LocalTime hora,int numero_puerta){
-        return this.citado.findByentradaAfterCita(fecha,hora,numero_puerta);
+        return this.citado.findByentradaAfterCita(fecha,hora.minusMinutes(1),numero_puerta);
     }
 
     public List<CitadoModel> getCitasByFecha(){

@@ -21,11 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Cuei.Entrada.Databases.Citado.CitadoModel;
 import com.Cuei.Entrada.Databases.Citado.CitadoService;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author josue
  */
+@Data @AllArgsConstructor @NoArgsConstructor class Response{
+        private int code;
+        private String message;
+} 
 @RestController
 @RequestMapping("/CitaCucei")
 public class RestApi {
@@ -47,7 +54,7 @@ public class RestApi {
     }
 
     @PostMapping()
-    public String saveCita(@RequestBody CitadoModel cita){
+    public Response saveCita(@RequestBody CitadoModel cita){
         //NOTA: no permitir a ninguna edicion, no tener id.
         System.out.println("es clonado: " + this.citados.isCloned(cita));
 
@@ -56,13 +63,13 @@ public class RestApi {
         }
         cita.setHoradelete(LocalTime.now().with(cita.getHora().plusMinutes(15)));
         if(this.citados.isCloned(cita)){
-           return "1 La cita ya existe, con la misma persona";
+           return new Response(1, "La cita ya existe, con la misma persona");
         }
         try{
             this.citados.saveCitado(cita);
-            return "0 cita guardada con exito";
+            return new Response(0, "cita guardada con exito");
         }catch(Exception e){
-            return "2" + e.getMessage();
+            return new Response(2, e.getMessage());
         }
     }
 
@@ -78,3 +85,4 @@ public class RestApi {
 
     }
 }
+

@@ -32,7 +32,7 @@ public interface CitadoRepository extends JpaRepository<CitadoModel,Long>{
     @Query(value = "select c from CitadoModel c WHERE c.fecha >= ?1 and c.hora < ?2 and c.entrada = ?3 order by c.fecha asc, c.hora asc")
     public abstract List<CitadoModel> findByentradaAfterCita(LocalDate fecha, LocalTime horadelete, int entrada);
     
-    @Query(value = "select c.id from CitadoModel c WHERE c.fecha <= ?1 or c.horadelete <= ?2")
+    @Query(value = "select c.id from CitadoModel c WHERE (c.fecha <= ?1 and c.horadelete <= ?2) or (c.fecha < ?1)")
     public abstract List<Long> findIdByFechaAndHoradeleteBefore(LocalDate fecha, LocalTime horadelete);
     public abstract List<CitadoModel> findByFecha(LocalDate fecha);
     
