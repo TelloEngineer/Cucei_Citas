@@ -5,21 +5,18 @@
 package com.Cuei.Entrada.Databases.Citado;
 
 import com.Cuei.Entrada.Databases.Cita.CitaKey;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 /**
  *
  * @author josue
  */
-@Embeddable
+
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoKey implements Serializable{
-    @Column(unique = false, nullable = false, name = "cita_id")
-    CitaKey citaId;
-    @Column(unique = false, nullable = false, name = "placas")
-    String placas;
+    CitaKey cita; //debe tener el mismo nombre, que la relacion
+    String vehiculo; //debe tener el mismo nombre, que la relacion
 }

@@ -5,22 +5,9 @@
 package com.Cuei.Entrada.Controllers;
 
 
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Cuei.Entrada.Databases.Citado.CitadoModel;
-import com.Cuei.Entrada.Databases.Citado.CitadoService;
-import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +23,7 @@ import lombok.NoArgsConstructor;
 @RestController
 @RequestMapping("/CitaCucei")
 public class RestApi {
+    /*
     @Autowired
     CitadoService citados; 
     @Autowired
@@ -84,5 +72,6 @@ public class RestApi {
         }
 
     }
+*/
 }
 

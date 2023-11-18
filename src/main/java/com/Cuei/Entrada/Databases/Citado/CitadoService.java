@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
  *
  * @author josue
  */
+/*
 @Service
 public class CitadoService {
     @Autowired
@@ -98,3 +99,4 @@ public class CitadoService {
         }   
     }
 }
+*/

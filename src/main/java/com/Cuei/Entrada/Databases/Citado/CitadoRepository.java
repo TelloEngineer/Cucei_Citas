@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.Query;
  *
  * @author josue
  */
-
+/*
 @Repository
 public interface CitadoRepository extends JpaRepository<CitadoModel,CitadoKey>{
     public abstract boolean existsByNombreAndFechaAndHora(String nombre, LocalDate fecha, LocalTime hora);
@@ -38,3 +38,4 @@ public interface CitadoRepository extends JpaRepository<CitadoModel,CitadoKey>{
     
     public abstract void deleteByIdIn(List <Long> Ids);
 }
+*/

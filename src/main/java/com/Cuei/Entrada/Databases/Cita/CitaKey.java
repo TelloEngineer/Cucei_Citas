@@ -18,13 +18,7 @@ import lombok.NoArgsConstructor;
  *
  * @author josue
  */
-@Embeddable
 public @Data @AllArgsConstructor @NoArgsConstructor class CitaKey implements Serializable {    
-    @Column(unique = false, nullable = false, name = "Fecha_cita")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
     private LocalDate fecha;
-    
-    @Column(unique = false, nullable = false, name = "Hora_cita")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
     private LocalTime hora;
 }

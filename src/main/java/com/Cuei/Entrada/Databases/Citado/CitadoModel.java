@@ -17,7 +17,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -42,25 +44,28 @@ import org.hibernate.annotations.OnDeleteAction;
 @Cache(
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
+@IdClass(CitadoKey.class)
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
-    @EmbeddedId
-    CitadoKey id;
-    
     @Column(unique = false, nullable = false, name = "nombre_persona")
     private String nombre;
 
     @Column(unique = false, nullable = false, name = "puerta_entrada")
     private int entrada;
 
+    @Id
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "placa_vehiculo") //se crea una columna, donde se guarda el foreign key
     private VehiculoModel vehiculo; //relacion many(citas) to one (vehiculo) 
     
+    @Id
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "citado") //se crea una columna, donde se guarda el foreign key
+    @JoinColumns({ //estoy usando embebido, por eso ocupo join columns
+        @JoinColumn(name="cita_fecha", referencedColumnName="Fecha_cita"),
+        @JoinColumn(name="cita_hora", referencedColumnName="Hora_cita")
+    })
     private CitaModel cita; //relacion many(citas) to one (vehiculo) 
 }
