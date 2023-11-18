@@ -4,6 +4,7 @@
  */
 package com.Cuei.Entrada.Databases.Citado;
 
+import com.Cuei.Entrada.Databases.Cita.CitaModel;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,11 +12,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
@@ -40,16 +43,24 @@ import org.hibernate.annotations.OnDeleteAction;
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
+    @EmbeddedId
+    CitadoKey id;
+    
     @Column(unique = false, nullable = false, name = "nombre_persona")
     private String nombre;
 
     @Column(unique = false, nullable = false, name = "puerta_entrada")
     private int entrada;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "placa_vehiculo") //se crea una columna, donde se guarda el foreign key
     private VehiculoModel vehiculo; //relacion many(citas) to one (vehiculo) 
     
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "citado") //se crea una columna, donde se guarda el foreign key
+    private CitaModel cita; //relacion many(citas) to one (vehiculo) 
 }

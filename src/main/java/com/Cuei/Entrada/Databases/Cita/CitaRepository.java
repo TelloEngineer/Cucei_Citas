@@ -4,10 +4,13 @@
  */
 package com.Cuei.Entrada.Databases.Cita;
 
+import com.Cuei.Entrada.Databases.Citado.CitadoModel;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
  *
  * @author josue
  */
-public interface CitaRepository {
+public interface CitaRepository extends JpaRepository<CitaModel,CitaKey>{
     
 }

@@ -9,8 +9,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +40,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class VehiculoModel {
     @Column(unique = false, nullable = false, name = "tipo_vehiculo")
     private String tipo;
     
-    @OneToOne(mappedBy = "vehiculo", orphanRemoval = true) // name attribute in citado
+    @OneToMany(mappedBy = "vehiculo", orphanRemoval = true) // name attribute in citado
     @JsonIgnore
-    @ToString.Exclude CitadoModel citado;
+    @ToString.Exclude Set<CitadoModel> citado;
 }
