@@ -40,32 +40,16 @@ import org.hibernate.annotations.OnDeleteAction;
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
-    @Id @GeneratedValue @Column(unique = true, nullable = false, name = "id")
-    private Long id;
-    
     @Column(unique = false, nullable = false, name = "nombre_persona")
     private String nombre;
-    
-    @Column(unique = false, nullable = false, name = "Fecha_cita")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
-    private LocalDate fecha;
-    
-    @Column(unique = false, nullable = false, name = "Hora_cita")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
-    private LocalTime hora;
-    
+
+    @Column(unique = false, nullable = false, name = "puerta_entrada")
+    private int entrada;
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "placa_vehiculo") //se crea una columna, donde se guarda el foreign key
     private VehiculoModel vehiculo; //relacion many(citas) to one (vehiculo) 
     
-    @Column(unique = false, nullable = false, name = "puerta_entrada")
-    private int entrada;
-    
-    @JsonIgnore
-    @Column(unique = false, nullable = false, name = "Hora_delete")
-    private LocalTime horadelete;
-    
-
 }
