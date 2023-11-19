@@ -8,6 +8,11 @@ package com.Cuei.Entrada.Controllers;
 import com.Cuei.Entrada.Databases.Cita.CitaKey;
 import com.Cuei.Entrada.Databases.Cita.CitaModel;
 import com.Cuei.Entrada.Databases.Cita.CitaService;
+import com.Cuei.Entrada.Databases.Citado.CitadoKey;
+import com.Cuei.Entrada.Databases.Citado.CitadoModel;
+import com.Cuei.Entrada.Databases.Citado.CitadoService;
+import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
+import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -39,49 +44,119 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RestApi {
 
     @Autowired
-    CitaService citados; 
+    CitaService citas; 
+    @Autowired
+    VehiculoService vehiculos;
+    @Autowired
+    CitadoService citados;
     
-
-    @GetMapping()
+    //GetMethods (all)
+    @GetMapping(path = "/cita")
     public List<CitaModel> getCitas(){
-        List<CitaModel> list = this.citados.getcitas();
+        List<CitaModel> list = this.citas.getcitas();
         //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
         return list;
     }
 
-    @GetMapping(path = "/{fecha}/{hora}/{placas}")
-    public Optional<CitaModel> getCitasById(
-      CitaKey key,
-      @PathVariable("placas") String placa
-    ) {
-        //System.out.println(cita.getHora().getHour() + "-" + cita.getHora().getMinute() + "-" + cita.getHora().getSecond() + "-"+ cita.getHora().getNano() +"  " + cita.getFecha().getDayOfMonth() + "-" + cita.getFecha().getMonth() + "-" + cita.getFecha().getYear());
-        //System.out.println(key.getFecha() + " " + key.getHora());
-        System.out.println(placa);
-        return this.citados.getById(key.getFecha(), key.getHora());
+    @GetMapping(path = "/Citado")
+    public List<CitadoModel> getCitados(){
+        List<CitadoModel> list = this.citados.getcitados();
+        //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
+        return list;
     }
-
-    @PostMapping()
+    
+    @GetMapping(path = "/vehiculo")
+    public List<VehiculoModel> getVehiculos(){
+        List<VehiculoModel> list = this.vehiculos.getVehiculos();
+        //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
+        return list;
+    }
+    
+    //GetMethods (just one)_______________________________________________________
+    @GetMapping(path = "citado/{fecha}/{hora}/{placas}") /// necesito editar
+    public Optional<CitadoModel> getCitadosById(
+      CitadoKey key
+      //@PathVariable("placas") String placas
+    ) {
+        System.err.println(key);
+        return this.citados.getById(key);
+    }
+    @GetMapping(path = "cita/{fecha}/{hora}")
+    public Optional<CitaModel> getCitasById(
+      CitaKey key
+    ) {
+        return this.citas.getById(key.getFecha(), key.getHora());
+    }
+    @GetMapping(path = "Vehiculo/{placas}")
+    public Optional<VehiculoModel> getVehiculosById(
+      String key
+    ) {
+        return this.vehiculos.getById(key);
+    }
+    //________________________________________________________________________
+    
+    //Post Methods_____________________________________________________________________________
+    
+    @PostMapping(path = "/cita")
     public Response saveCita(@RequestBody CitaModel cita){
         try{
             cita.setHoradelete(LocalTime.now().with(cita.getHora().plusMinutes(15)));
-            this.citados.saveCita(cita);
+            this.citas.saveCita(cita);
+            return new Response(0, "cita guardada con exito");
+        }catch(Exception e){
+            return new Response(2, e.getMessage());
+        }
+    }
+    @PostMapping(path = "/vehiculo")
+    public Response saveVehiculo(@RequestBody VehiculoModel vehiculo){
+        try{
+            this.vehiculos.saveVehiculo(vehiculo);
             return new Response(0, "cita guardada con exito");
         }catch(Exception e){
             return new Response(2, e.getMessage());
         }
     }
 
-    @DeleteMapping( path = "/{fecha}/{hora}")
-    public String deleteById(CitaKey id){
-        CitaModel citado = this.citados.getcita(id);
-        boolean ok = this.citados.deleteCita(id);
-        if(ok){
-            return "Se elimino la cita con el id: " + id.toString();
+    @PostMapping(path = "/Citado")
+    public Response saveCitado(@RequestBody CitadoModel citado){
+        try{
+            this.citados.saveCitado(citado);
+            return new Response(0, "cita guardada con exito");
+        }catch(Exception e){
+            return new Response(2, e.getMessage());
+        }
+    }
+    
+    ///______________________________________________________________________
+    //Delete Methods_________________________________________________________
+    @DeleteMapping( path = "deleteCita/{fecha}/{hora}")
+    public Response deleteCitaById(
+        CitaKey id
+    ){
+        CitaModel citado = this.citas.getcita(id);
+        boolean ok = this.citas.deleteCita(id);
+        if(ok){            
+            return new Response(0, "Se elimino la cita con el id: " + id.toString());
         }else{
-            return "No se encontro la cita con el id: " + id.toString() + " para elminar";
+            return new Response(2, "No se encontro la cita con el id: " + id.toString() + " para elminar");
         }
 
     }
+    @DeleteMapping( path = "deleteVehiculo/{placa}")
+    public Response deleteVehiculoById(
+        String id
+    ){
+        VehiculoModel citado = this.vehiculos.getVehiculo(id);
+        boolean ok = this.vehiculos.deleteVehiculo(id);
+        if(ok){            
+            return new Response(0, "Se elimino la cita con el id: " + id);
+        }else{
+            return new Response(2, "No se encontro la cita con el id: " + id + " para elminar");
+        }
+
+    }
+  
+    ///_________________________________________________________________________
 
 }
 
