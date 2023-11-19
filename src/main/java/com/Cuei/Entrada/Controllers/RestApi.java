@@ -58,11 +58,18 @@ public class RestApi {
         return list;
     }
 
-    @GetMapping(path = "/Citado")
+    @GetMapping(path = "/citado")
     public List<CitadoModel> getCitados(){
-        List<CitadoModel> list = this.citados.getcitados();
-        //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
-        return list;
+
+        try{
+           List<CitadoModel> list = this.citados.getcitados();
+            //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
+            return list; 
+        }catch(Exception e){
+            System.out.println(e);
+            return null;
+        }
+        
     }
     
     @GetMapping(path = "/vehiculo")
@@ -85,7 +92,7 @@ public class RestApi {
     public Optional<CitaModel> getCitasById(
       CitaKey key
     ) {
-        return this.citas.getById(key.getFecha(), key.getHora());
+        return this.citas.getById(key);
     }
     @GetMapping(path = "Vehiculo/{placas}")
     public Optional<VehiculoModel> getVehiculosById(
@@ -111,17 +118,20 @@ public class RestApi {
     public Response saveVehiculo(@RequestBody VehiculoModel vehiculo){
         try{
             this.vehiculos.saveVehiculo(vehiculo);
-            return new Response(0, "cita guardada con exito");
+            return new Response(0, "vehiculo guardada con exito");
         }catch(Exception e){
             return new Response(2, e.getMessage());
         }
     }
 
-    @PostMapping(path = "/Citado")
+    @PostMapping(path = "/citado")
     public Response saveCitado(@RequestBody CitadoModel citado){
         try{
+            citado.getCita().setHoradelete(LocalTime.now().with(citado.getCita().getHora().plusMinutes(15)));
+            this.citas.saveCita(citado.getCita());
+            this.vehiculos.saveVehiculo(citado.getVehiculo());
             this.citados.saveCitado(citado);
-            return new Response(0, "cita guardada con exito");
+            return new Response(0, "citado guardada con exito");
         }catch(Exception e){
             return new Response(2, e.getMessage());
         }
@@ -129,7 +139,7 @@ public class RestApi {
     
     ///______________________________________________________________________
     //Delete Methods_________________________________________________________
-    @DeleteMapping( path = "deleteCita/{fecha}/{hora}")
+    @DeleteMapping( path = "cita/{fecha}/{hora}")
     public Response deleteCitaById(
         CitaKey id
     ){
@@ -142,16 +152,16 @@ public class RestApi {
         }
 
     }
-    @DeleteMapping( path = "deleteVehiculo/{placa}")
+    @DeleteMapping( path = "vehiculo/{placa}")
     public Response deleteVehiculoById(
         String id
     ){
         VehiculoModel citado = this.vehiculos.getVehiculo(id);
         boolean ok = this.vehiculos.deleteVehiculo(id);
         if(ok){            
-            return new Response(0, "Se elimino la cita con el id: " + id);
+            return new Response(0, "Se elimino el vehiculo con la placa: " + id);
         }else{
-            return new Response(2, "No se encontro la cita con el id: " + id + " para elminar");
+            return new Response(2, "No se encontro el vehiculo con la placa: " + id + " para elminar");
         }
 
     }

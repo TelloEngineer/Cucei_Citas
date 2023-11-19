@@ -22,6 +22,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -60,7 +61,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitaModel {
     
     @OneToMany(mappedBy = "cita", orphanRemoval = true) // name attribute in citado
     @JsonIgnore
-    @ToString.Exclude Set<CitadoModel> citado;
+    @ToString.Exclude List<CitadoModel> citado;
 
 }
 

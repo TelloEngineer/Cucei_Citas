@@ -19,6 +19,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  * @author josue
  */
+@Embeddable
 public @Data @AllArgsConstructor @NoArgsConstructor class CitaKey implements Serializable {    
     @DateTimeFormat(pattern="dd-MM-yyyy")
     private LocalDate fecha;

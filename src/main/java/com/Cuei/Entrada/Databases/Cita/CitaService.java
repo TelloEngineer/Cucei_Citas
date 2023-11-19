@@ -28,8 +28,8 @@ public class CitaService {
         return  this.citas.findAll();
     }
     
-    public Optional<CitaModel> getById(LocalDate fecha, LocalTime hora){
-        return this.citas.findByIdComposed(fecha,hora);
+    public Optional<CitaModel> getById(CitaKey id){
+        return this.citas.findById(id);
     }
     
     public Optional<CitaModel> getById_id(CitaKey id){
@@ -43,7 +43,7 @@ public class CitaService {
     
     public boolean deleteCita(CitaKey id){
         Optional<CitaModel> entity;
-        entity = this.citas.findByIdComposed(id.getFecha(),id.getHora());
+        entity = this.citas.findById(id);
         if(entity == null){
             return false;
         }

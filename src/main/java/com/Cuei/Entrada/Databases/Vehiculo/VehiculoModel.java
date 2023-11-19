@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,5 +43,5 @@ public @Data @AllArgsConstructor @NoArgsConstructor class VehiculoModel {
     
     @OneToMany(mappedBy = "vehiculo", orphanRemoval = true) // name attribute in citado
     @JsonIgnore
-    @ToString.Exclude Set<CitadoModel> citado;
+    @ToString.Exclude List<CitadoModel> citado;
 }

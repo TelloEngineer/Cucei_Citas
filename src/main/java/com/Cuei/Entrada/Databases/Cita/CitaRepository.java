@@ -9,13 +9,16 @@ import java.time.LocalTime;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
  * @author josue
  */
 public interface CitaRepository extends JpaRepository<CitaModel,CitaKey>{
-    @Query(value = "select c from CitaModel c where c.fecha = ?1 and c.hora = ?2")
-    public abstract Optional<CitaModel> findByIdComposed(LocalDate fecha, LocalTime horadelete);
+    //@Query(value = "select c from CitaModel c where c.fecha = :#{#key.fecha} and c.hora = :#{#key.hora}")
+    @Query(value = "select c1_0.fecha_cita,c1_0.hora_cita,c1_0.hora_delete from cita c1_0 where (c1_0.fecha_cita,c1_0.hora_cita) in ((?,?))")
+    @Override
+    public abstract Optional<CitaModel> findById(@Param("key") CitaKey id);
 
 }
