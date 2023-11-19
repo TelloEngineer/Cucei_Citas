@@ -16,8 +16,7 @@ import org.springframework.data.repository.query.Param;
  * @author josue
  */
 public interface CitaRepository extends JpaRepository<CitaModel,CitaKey>{
-    //@Query(value = "select c from CitaModel c where c.fecha = :#{#key.fecha} and c.hora = :#{#key.hora}")
-    @Query(value = "select c1_0.fecha_cita,c1_0.hora_cita,c1_0.hora_delete from cita c1_0 where (c1_0.fecha_cita,c1_0.hora_cita) in ((?,?))")
+    @Query(value = "select c from CitaModel c where c.fecha = :#{#key.fecha} and c.hora = :#{#key.hora}")
     @Override
     public abstract Optional<CitaModel> findById(@Param("key") CitaKey id);
 
