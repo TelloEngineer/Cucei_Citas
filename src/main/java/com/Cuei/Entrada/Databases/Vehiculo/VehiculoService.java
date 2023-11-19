@@ -38,8 +38,13 @@ public class VehiculoService {
     }
 
     public boolean deleteVehiculo(String placa){
+        Optional<VehiculoModel> entity;
+        entity = this.vehiculo.findById(placa);
+        if(entity == null){
+            return false;
+        }
         try{
-            this.vehiculo.deleteById(placa);
+            this.vehiculo.delete(entity.get());
             return true;
         }catch(Exception error){
             return false;

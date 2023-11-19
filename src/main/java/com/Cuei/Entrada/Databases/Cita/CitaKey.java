@@ -13,12 +13,15 @@ import java.time.LocalTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author josue
  */
 public @Data @AllArgsConstructor @NoArgsConstructor class CitaKey implements Serializable {    
+    @DateTimeFormat(pattern="dd-MM-yyyy")
     private LocalDate fecha;
+    @DateTimeFormat(pattern="HH:mm") 
     private LocalTime hora;
 }
