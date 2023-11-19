@@ -45,17 +45,19 @@ public class RestApi {
     @GetMapping()
     public List<CitaModel> getCitas(){
         List<CitaModel> list = this.citados.getcitas();
-        System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
+        //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
         return list;
     }
 
-    @GetMapping(path = "/{fecha}/{hora}")
+    @GetMapping(path = "/{fecha}/{hora}/{placas}")
     public Optional<CitaModel> getCitasById(
-      CitaKey key  
+      CitaKey key,
+      @PathVariable("placas") String placa
     ) {
         //System.out.println(cita.getHora().getHour() + "-" + cita.getHora().getMinute() + "-" + cita.getHora().getSecond() + "-"+ cita.getHora().getNano() +"  " + cita.getFecha().getDayOfMonth() + "-" + cita.getFecha().getMonth() + "-" + cita.getFecha().getYear());
-        System.out.println(key.getFecha() + " " + key.getHora());
-        return this.citados.getById_id(key);
+        //System.out.println(key.getFecha() + " " + key.getHora());
+        System.out.println(placa);
+        return this.citados.getById(key.getFecha(), key.getHora());
     }
 
     @PostMapping()
