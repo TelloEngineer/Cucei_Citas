@@ -52,8 +52,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitaModel {
     @JsonFormat( shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy HH:mm")
     private LocalDateTime fecha;
 
-    @Column(unique = false, nullable = false, name = "Hora_delete")
-    private LocalTime horadelete;
+    @Column(unique = false, nullable = false, name = "fecha_delete")
+    private LocalDateTime fechadelete;
     
     @OneToMany(mappedBy = "cita", orphanRemoval = true) // name attribute in citado
     @JsonIgnore

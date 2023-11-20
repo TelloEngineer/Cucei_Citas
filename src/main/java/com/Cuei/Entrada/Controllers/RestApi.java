@@ -108,7 +108,7 @@ public class RestApi {
     @PostMapping(path = "/cita")
     public Response saveCita(@RequestBody CitaModel cita){
         try{
-            cita.setHoradelete(LocalTime.now().with(cita.getFecha().toLocalTime().plusMinutes(15)));
+            cita.setFechadelete(LocalDateTime.now().with(cita.getFecha().toLocalTime().plusMinutes(15)));
             this.citas.saveCita(cita);
             return new Response(0, "cita guardada con exito");
         }catch(Exception e){
@@ -128,7 +128,8 @@ public class RestApi {
     @PostMapping(path = "/citado")
     public Response saveCitado(@RequestBody CitadoModel citado){
 
-            citado.getCita().setHoradelete(LocalTime.now().with(citado.getCita().getFecha().toLocalTime().plusMinutes(15)));
+            citado.getCita().setFechadelete(LocalDateTime.now().with(citado.getCita().getFecha().toLocalTime().plusMinutes(15)));
+            System.out.println(citado.getCita().getFechadelete());
             this.citas.saveCita(citado.getCita());
             this.vehiculos.saveVehiculo(citado.getVehiculo());
             this.citados.saveCitado(citado);
