@@ -21,6 +21,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
@@ -33,6 +34,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalIdCache;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -44,17 +46,11 @@ import org.hibernate.annotations.OnDeleteAction;
 @Cache(
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
-@IdClass(CitaKey.class)
 public @Data @AllArgsConstructor @NoArgsConstructor class CitaModel {
     @Id
     @Column(unique = false, nullable = false, name = "Fecha_cita")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
-    private LocalDate fecha;
-    
-    @Id
-    @Column(unique = false, nullable = false, name = "Hora_cita")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm")
-    private LocalTime hora;
+    @JsonFormat( shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy HH:mm")
+    private LocalDateTime fecha;
 
     @Column(unique = false, nullable = false, name = "Hora_delete")
     private LocalTime horadelete;

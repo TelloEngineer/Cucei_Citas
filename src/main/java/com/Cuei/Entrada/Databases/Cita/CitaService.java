@@ -4,8 +4,7 @@
  */
 package com.Cuei.Entrada.Databases.Cita;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class CitaService {
     @Autowired
     CitaRepository citas;
     
-    public CitaModel getcita(CitaKey id){
+    public CitaModel getcita(LocalDateTime id){
         return this.citas.getReferenceById(id);
     }
 
@@ -28,11 +27,8 @@ public class CitaService {
         return  this.citas.findAll();
     }
     
-    public Optional<CitaModel> getById(CitaKey id){
-        return this.citas.findById(id);
-    }
-    
-    public Optional<CitaModel> getById_id(CitaKey id){
+    public Optional<CitaModel> getById(LocalDateTime id){
+        System.out.print(id);
         return this.citas.findById(id);
     }
      
@@ -41,7 +37,7 @@ public class CitaService {
     }
 
     
-    public boolean deleteCita(CitaKey id){
+    public boolean deleteCita(LocalDateTime id){
         Optional<CitaModel> entity;
         entity = this.citas.findById(id);
         if(entity == null){

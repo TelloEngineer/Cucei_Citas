@@ -5,7 +5,6 @@
 package com.Cuei.Entrada.Controllers;
 
 
-import com.Cuei.Entrada.Databases.Cita.CitaKey;
 import com.Cuei.Entrada.Databases.Cita.CitaModel;
 import com.Cuei.Entrada.Databases.Cita.CitaService;
 import com.Cuei.Entrada.Databases.Citado.CitadoKey;
@@ -13,7 +12,7 @@ import com.Cuei.Entrada.Databases.Citado.CitadoModel;
 import com.Cuei.Entrada.Databases.Citado.CitadoService;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +53,7 @@ public class RestApi {
     @GetMapping(path = "/cita")
     public List<CitaModel> getCitas(){
         List<CitaModel> list = this.citas.getcitas();
-        //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
+        //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora()
         return list;
     }
 
@@ -63,7 +62,7 @@ public class RestApi {
 
         try{
            List<CitadoModel> list = this.citados.getcitados();
-            //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
+            //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora()
             return list; 
         }catch(Exception e){
             System.out.println(e);
@@ -75,23 +74,25 @@ public class RestApi {
     @GetMapping(path = "/vehiculo")
     public List<VehiculoModel> getVehiculos(){
         List<VehiculoModel> list = this.vehiculos.getVehiculos();
-        //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora());
+        //System.out.println(list.get(0).getFecha() + " " + list.get(0).getHora()
         return list;
     }
     
     //GetMethods (just one)_______________________________________________________
-    @GetMapping(path = "citado/{fecha}/{hora}/{placas}") /// necesito editar
+    @GetMapping(path = "citado/{fecha}/{placas}") /// necesito editar
     public Optional<CitadoModel> getCitadosById(
-      CitadoKey key
-      //@PathVariable("placas") String placas
+      LocalDateTime cita,
+      @PathVariable("placas") String placas
     ) {
+        CitadoKey key = new CitadoKey(cita, placas);
         System.err.println(key);
         return this.citados.getById(key);
     }
-    @GetMapping(path = "cita/{fecha}/{hora}")
+    @GetMapping(path = "cita/{fecha}")
     public Optional<CitaModel> getCitasById(
-      CitaKey key
+      @DateTimeFormat(pattern="dd-MM-yyyy_HH:mm") @PathVariable("fecha") LocalDateTime key
     ) {
+        System.out.print(key);
         return this.citas.getById(key);
     }
     @GetMapping(path = "Vehiculo/{placas}")
@@ -107,7 +108,7 @@ public class RestApi {
     @PostMapping(path = "/cita")
     public Response saveCita(@RequestBody CitaModel cita){
         try{
-            cita.setHoradelete(LocalTime.now().with(cita.getHora().plusMinutes(15)));
+            cita.setHoradelete(LocalTime.now().with(cita.getFecha().toLocalTime().plusMinutes(15)));
             this.citas.saveCita(cita);
             return new Response(0, "cita guardada con exito");
         }catch(Exception e){
@@ -126,22 +127,20 @@ public class RestApi {
 
     @PostMapping(path = "/citado")
     public Response saveCitado(@RequestBody CitadoModel citado){
-        try{
-            citado.getCita().setHoradelete(LocalTime.now().with(citado.getCita().getHora().plusMinutes(15)));
+
+            citado.getCita().setHoradelete(LocalTime.now().with(citado.getCita().getFecha().toLocalTime().plusMinutes(15)));
             this.citas.saveCita(citado.getCita());
             this.vehiculos.saveVehiculo(citado.getVehiculo());
             this.citados.saveCitado(citado);
             return new Response(0, "citado guardada con exito");
-        }catch(Exception e){
-            return new Response(2, e.getMessage());
-        }
+       
     }
     
     ///______________________________________________________________________
     //Delete Methods_________________________________________________________
-    @DeleteMapping( path = "cita/{fecha}/{hora}")
+    @DeleteMapping( path = "cita/{fecha}")
     public Response deleteCitaById(
-        CitaKey id
+        LocalDateTime id
     ){
         CitaModel citado = this.citas.getcita(id);
         boolean ok = this.citas.deleteCita(id);

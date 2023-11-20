@@ -63,9 +63,6 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumns({ //estoy usando embebido, por eso ocupo join columns
-        @JoinColumn(name="cita_fecha", referencedColumnName="Fecha_cita"),
-        @JoinColumn(name="cita_hora", referencedColumnName="Hora_cita")
-    })
+    @JoinColumn(name="cita_fecha", referencedColumnName="Fecha_cita")
     private CitaModel cita; //relacion many(citas) to one (vehiculo) 
 }

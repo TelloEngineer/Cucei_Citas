@@ -4,8 +4,8 @@
  */
 package com.Cuei.Entrada.Databases.Citado;
 
-import com.Cuei.Entrada.Databases.Cita.CitaKey;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,6 @@ import lombok.NoArgsConstructor;
  */
 
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoKey implements Serializable{
-    CitaKey cita; //debe tener el mismo nombre, que la relacion
+    LocalDateTime cita; //debe tener el mismo nombre, que la relacion
     String vehiculo; //debe tener el mismo nombre, que la relacion
 }
