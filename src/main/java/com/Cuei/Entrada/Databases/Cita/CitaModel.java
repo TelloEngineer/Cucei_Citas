@@ -55,9 +55,9 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitaModel {
     @Column(unique = false, nullable = false, name = "fecha_delete")
     private LocalDateTime fechadelete;
     
-    @OneToMany(mappedBy = "cita", orphanRemoval = true) // name attribute in citado
+    @OneToMany(mappedBy = "cita") // name attribute in citado
     @JsonIgnore
-    @ToString.Exclude List<CitadoModel> citado;
+    @ToString.Exclude Set<CitadoModel> citado;
 
 }
 

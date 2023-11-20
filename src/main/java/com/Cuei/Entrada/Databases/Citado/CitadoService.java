@@ -41,6 +41,7 @@ public class CitadoService {
     public boolean deleteCitado(CitadoKey id){
         Optional<CitadoModel> entity;
         entity = this.citado.findById(id);
+        System.out.println(entity);
         if(entity == null){
             return false;
         }

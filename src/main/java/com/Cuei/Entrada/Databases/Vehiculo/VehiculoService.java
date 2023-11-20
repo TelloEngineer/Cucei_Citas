@@ -40,6 +40,7 @@ public class VehiculoService {
     public boolean deleteVehiculo(String placa){
         Optional<VehiculoModel> entity;
         entity = this.vehiculo.findById(placa);
+        System.out.println(entity);
         if(entity == null){
             return false;
         }

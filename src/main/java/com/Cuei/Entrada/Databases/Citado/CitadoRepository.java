@@ -16,5 +16,7 @@ import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface CitadoRepository extends JpaRepository<CitadoModel,CitadoKey>{
-    
+    @Query("select u from CitadoModel u where u.cita.fecha = :#{#citado.cita} and u.vehiculo.placas = :#{#citado.vehiculo}")
+    @Override
+    Optional<CitadoModel> findById(@Param("citado") CitadoKey citado);
 }

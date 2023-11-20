@@ -79,14 +79,14 @@ public class RestApi {
     }
     
     //GetMethods (just one)_______________________________________________________
-    @GetMapping(path = "citado/{fecha}/{placas}") /// necesito editar
+    @GetMapping(path = "citado/{fecha}/{placa}") /// necesito editar
     public Optional<CitadoModel> getCitadosById(
-      LocalDateTime cita,
-      @PathVariable("placas") String placas
-    ) {
-        CitadoKey key = new CitadoKey(cita, placas);
-        System.err.println(key);
-        return this.citados.getById(key);
+      @DateTimeFormat(pattern="dd-MM-yyyy_HH:mm") @PathVariable("fecha") LocalDateTime cita,
+      @PathVariable("placa") String placas
+    ) { 
+            CitadoKey key = new CitadoKey(cita, placas);
+            System.err.println(key);
+            return this.citados.getById(key);
     }
     @GetMapping(path = "cita/{fecha}")
     public Optional<CitaModel> getCitasById(
@@ -95,9 +95,9 @@ public class RestApi {
         System.out.print(key);
         return this.citas.getById(key);
     }
-    @GetMapping(path = "Vehiculo/{placas}")
+    @GetMapping(path = "vehiculo/{placa}")
     public Optional<VehiculoModel> getVehiculosById(
-      String key
+      @PathVariable("placa") String key
     ) {
         return this.vehiculos.getById(key);
     }
@@ -106,7 +106,9 @@ public class RestApi {
     //Post Methods_____________________________________________________________________________
     
     @PostMapping(path = "/cita")
-    public Response saveCita(@RequestBody CitaModel cita){
+    public Response saveCita(
+        @RequestBody CitaModel cita
+    ){
         try{
             cita.setFechadelete(LocalDateTime.now().with(cita.getFecha().toLocalTime().plusMinutes(15)));
             this.citas.saveCita(cita);
@@ -116,7 +118,9 @@ public class RestApi {
         }
     }
     @PostMapping(path = "/vehiculo")
-    public Response saveVehiculo(@RequestBody VehiculoModel vehiculo){
+    public Response saveVehiculo(
+        @RequestBody VehiculoModel vehiculo
+    ){
         try{
             this.vehiculos.saveVehiculo(vehiculo);
             return new Response(0, "vehiculo guardada con exito");
@@ -126,14 +130,19 @@ public class RestApi {
     }
 
     @PostMapping(path = "/citado")
-    public Response saveCitado(@RequestBody CitadoModel citado){
-
+    public Response saveCitado(
+        @RequestBody CitadoModel citado
+    ){
+        try{
             citado.getCita().setFechadelete(LocalDateTime.now().with(citado.getCita().getFecha().toLocalTime().plusMinutes(15)));
             System.out.println(citado.getCita().getFechadelete());
-            this.citas.saveCita(citado.getCita());
-            this.vehiculos.saveVehiculo(citado.getVehiculo());
+            //this.citas.saveCita(citado.getCita());
+            //this.vehiculos.saveVehiculo(citado.getVehiculo());
             this.citados.saveCitado(citado);
             return new Response(0, "citado guardada con exito");
+        }catch(Exception e){
+            return new Response(2, e.getMessage());
+        }
        
     }
     
@@ -141,7 +150,7 @@ public class RestApi {
     //Delete Methods_________________________________________________________
     @DeleteMapping( path = "cita/{fecha}")
     public Response deleteCitaById(
-        LocalDateTime id
+        @DateTimeFormat(pattern="dd-MM-yyyy_HH:mm") @PathVariable("fecha") LocalDateTime id
     ){
         CitaModel citado = this.citas.getcita(id);
         boolean ok = this.citas.deleteCita(id);
@@ -152,11 +161,25 @@ public class RestApi {
         }
 
     }
+    @DeleteMapping(path = "citado/{fecha}/{placa}") /// necesito editar
+    public Response deleteCitadoById(
+      @DateTimeFormat(pattern="dd-MM-yyyy_HH:mm") @PathVariable("fecha") LocalDateTime cita,
+      @PathVariable("placa") String placas
+    ) { 
+        CitadoKey id = new CitadoKey(cita, placas);
+        CitadoModel citado = this.citados.getcitado(id);
+        boolean ok = this.citados.deleteCitado(id);
+        if(ok){            
+            return new Response(0, "Se elimino la cita con el id: " + id.toString());
+        }else{
+            return new Response(2, "No se encontro la cita con el id: " + id.toString() + " para elminar");
+        }
+
+    }
     @DeleteMapping( path = "vehiculo/{placa}")
     public Response deleteVehiculoById(
-        String id
+        @PathVariable("placa") String id
     ){
-        VehiculoModel citado = this.vehiculos.getVehiculo(id);
         boolean ok = this.vehiculos.deleteVehiculo(id);
         if(ok){            
             return new Response(0, "Se elimino el vehiculo con la placa: " + id);
