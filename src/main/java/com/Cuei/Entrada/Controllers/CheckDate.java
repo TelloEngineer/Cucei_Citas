@@ -5,6 +5,8 @@
 package com.Cuei.Entrada.Controllers;
 
 
+import com.Cuei.Entrada.Databases.Citado.CitadoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,29 +21,29 @@ import org.springframework.web.client.RestTemplate;
 public class CheckDate {
     private int n;
     private  RestTemplate restTemplate = new RestTemplate();
-    /*
+
     @Autowired
     CitadoService citados;
-    */
+    /*
     @GetMapping("/Entrada")
     public String entrada(Model model, @RequestParam int n) {
-        /*
+        
         this.n = n;
         this.deleteLateAppointment();
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("citados", citados.getCitaBeforeCita(now.toLocalDate(), now.toLocalTime(),this.n));
         model.addAttribute("tolerancia", citados.getCitaAfterCita(now.toLocalDate(), now.toLocalTime(),this.n));
         return "Entradas";
-        */
+        
         return "Entradas";
-    }
+    }*/
     
     //@Scheduled(cron = "0 */1 * ? * *")
-    /*
+
     private void deleteLateAppointment(){
-        citados.deleteCitados(citados.findAfter15Min());
+        this.citados.deleteAfter15Min();
     }
-    */
+
     /*@Scheduled(fixedRate = 500)
     private void reload(){
         String result = restTemplate.getForObject("http://localhost:8080/Entrada?n={hotel}", String.class, this.n);

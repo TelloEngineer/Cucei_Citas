@@ -37,7 +37,6 @@ public class CitadoService {
         return this.citado.save(citado);
     }
 
-    
     public boolean deleteCitado(CitadoKey id){
         Optional<CitadoModel> entity;
         entity = this.citado.findById(id);
@@ -51,5 +50,16 @@ public class CitadoService {
         }catch(Exception error){
             return false;
         }   
+    }
+    
+    //Custom_________________________________________________________
+    public List<CitadoModel> getBeforeCita(LocalDateTime fechaActual, int entrada){
+        return this.citado.findBeforeCita(fechaActual.minusMinutes(1), entrada);
+    }
+    public List<CitadoModel> getAfterCita(LocalDateTime fechaActual, int entrada){
+        return this.citado.findBeforeCita(fechaActual.minusMinutes(1), entrada);
+    }
+    public void deleteAfter15Min(){
+        System.out.println(this.citado.deleteCitaDelete(LocalDateTime.now()));
     }
 }
