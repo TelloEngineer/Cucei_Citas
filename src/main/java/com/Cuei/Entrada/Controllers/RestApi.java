@@ -46,7 +46,7 @@ public class RestApi {
     CitadoService citados;
     
     //GetMethods (all)
-    /*
+    
     @GetMapping()
     public List<CitadoModel> getCitados(){
         System.out.println("before: " +this.citados.getBeforeCita(LocalDateTime.now(), 2));
@@ -59,7 +59,7 @@ public class RestApi {
             return null;
         }       
     }
-    */
+    
     //GetMethods (just one)_______________________________________________________
     /*
     @GetMapping(path = "{fecha}/{placa}") /// necesito editar
@@ -101,18 +101,17 @@ public class RestApi {
     ///______________________________________________________________________
     //Delete Methods_________________________________________________________
    
-    @DeleteMapping(path = "{fecha}/{placa}") /// necesito editar
+    @DeleteMapping(path = "{fecha}/{placa}") 
     public Response deleteCitadoById(
       @DateTimeFormat(pattern="dd-MM-yyyy_HH:mm") @PathVariable("fecha") LocalDateTime cita,
       @PathVariable("placa") String placas
     ) { 
         CitadoKey id = new CitadoKey(cita, placas);
-        CitadoModel citado = this.citados.getcitado(id);
         boolean ok = this.citados.deleteCitado(id);
         if(ok){            
-            return new Response(0, "Se elimino la cita con el id: " + id.toString());
+            return new Response(0, "Se elimino la cita del: " + id.getCita() + '\n' +" con las placas: " + id.getVehiculo());
         }else{
-            return new Response(2, "No se encontro la cita con el id: " + id.toString() + " para elminar");
+            return new Response(2, "No se encontro la cita del: " + id.getCita() +  "con las placas: " + id.getVehiculo() + " para elminar");
         }
     }
     ///_________________________________________________________________________
