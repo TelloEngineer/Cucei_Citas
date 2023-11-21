@@ -7,9 +7,13 @@ package com.Cuei.Entrada.Databases.Citado;
 import com.Cuei.Entrada.Databases.Cita.CitaModel;
 import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -34,22 +38,25 @@ import org.hibernate.annotations.NaturalIdCache;
 @Cache(
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
-@IdClass(CitadoKey.class)
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
+    
+    @EmbeddedId
+    private CitadoKey id;
+    
     @Column(unique = false, nullable = false, name = "nombre_persona")
     private String nombre;
 
     @Column(unique = false, nullable = false, name = "puerta_entrada")
     private int entrada;
 
-    @Id
+    
     @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "placa_vehiculo") //se crea una columna, donde se guarda el foreign key
     private VehiculoModel vehiculo; //relacion many(citas) to one (vehiculo) 
     
-    @Id
+    
     @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     //@OnDelete(action = OnDeleteAction.CASCADE)

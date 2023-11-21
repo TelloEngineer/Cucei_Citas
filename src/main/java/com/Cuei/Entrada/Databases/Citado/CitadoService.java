@@ -34,6 +34,13 @@ public class CitadoService {
     }
     
     public CitadoModel saveCitado(CitadoModel citado){
+        ///setting automate values.
+        //Set fecha to delete
+        citado.getCita().setFechadelete(LocalDateTime.now().with(citado.getCita().getFecha().toLocalTime().plusMinutes(15)));
+        //Set Id
+        citado.setId(new CitadoKey(citado.getCita().getFecha(), citado.getVehiculo().getPlacas()));
+        System.out.println(citado.getId());
+        
         return this.citado.save(citado);
     }
 
@@ -60,6 +67,6 @@ public class CitadoService {
         return this.citado.findAfterCita(fechaActual.minusMinutes(1), entrada);
     }
     public void deleteAfter15Min(){
-        this.citado.deleteCitadelete(LocalDateTime.now());
+        //System.out.println(this.citado.deleteCitadelete(LocalDateTime.now()));
     }
 }

@@ -84,7 +84,6 @@ public class RestApi {
         @RequestBody CitadoModel citado
     ){
         try{
-            citado.getCita().setFechadelete(LocalDateTime.now().with(citado.getCita().getFecha().toLocalTime().plusMinutes(15)));
             System.out.println(citado.getCita().getFechadelete());
             this.citados.saveCitado(citado);
             return new Response(0, "citado guardada con exito");
