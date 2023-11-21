@@ -39,7 +39,8 @@ public class CheckDate {
     //@Scheduled(cron = "0 */1 * ? * *")
 
     private void deleteLateAppointment(){
-        this.citados.deleteAfter15Min();
+        System.out.println(this.citados.findAfter15Min());
+        this.citados.deleteCitados(this.citados.findAfter15Min());
     }
 
     /*@Scheduled(fixedRate = 500)

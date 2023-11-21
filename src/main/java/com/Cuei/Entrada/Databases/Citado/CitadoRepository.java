@@ -33,6 +33,11 @@ public interface CitadoRepository extends JpaRepository<CitadoModel,CitadoKey>{
     @Query("select u from CitadoModel u where u.id.cita < ?1 and u.entrada = ?2 order by u.id.cita asc")
     List<CitadoModel> findAfterCita(LocalDateTime fechaReal, int entrada);
     
-   
+    @Query(value = "select c.id from CitadoModel c WHERE c.cita.fechadelete <= ?1")
+    public abstract List<CitadoKey> findIdByFechadelete(LocalDateTime fechaReal);
+
+    public abstract void deleteByIdIn(List <CitadoKey> Ids);
+
+
 
 }

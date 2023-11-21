@@ -36,7 +36,7 @@ public class CitadoService {
     public CitadoModel saveCitado(CitadoModel citado){
         ///setting automate values.
         //Set fecha to delete
-        citado.getCita().setFechadelete(LocalDateTime.now().with(citado.getCita().getFecha().toLocalTime().plusMinutes(15)));
+        citado.getCita().setFechadelete(citado.getCita().getFecha().with(citado.getCita().getFecha().toLocalTime().plusMinutes(15)));
         //Set Id
         citado.setId(new CitadoKey(citado.getCita().getFecha(), citado.getVehiculo().getPlacas()));
         System.out.println(citado.getId());
@@ -67,7 +67,27 @@ public class CitadoService {
     public List<CitadoModel> getAfterCita(LocalDateTime fechaActual, int entrada){
         return this.citado.findAfterCita(fechaActual.minusMinutes(1), entrada);
     }
-    public void deleteAfter15Min(){
-        //System.out.println(this.citado.deleteCitadelete(LocalDateTime.now()));
+    @Transactional
+    public boolean deleteCitados(List <CitadoKey> ids){
+        if(ids == null){
+            return false;
+        }
+        boolean isEmpty = ids.isEmpty();
+        if(!isEmpty){
+           this.citado.deleteByIdIn(ids); 
+        }
+        return isEmpty;      
     }
+
+   
+    
+    public List<CitadoKey> findAfter15Min(){
+        try{
+            return this.citado.findIdByFechadelete(LocalDateTime.now());
+        }catch(Exception error){
+            return null;
+        } 
+    }
+
+
 }
