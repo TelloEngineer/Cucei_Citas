@@ -11,11 +11,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -42,6 +46,10 @@ public @Data @AllArgsConstructor @NoArgsConstructor class VehiculoModel {
     private String tipo;
     
     @OneToMany(mappedBy = "vehiculo", orphanRemoval = true) // name attribute in citado
-    @JsonIgnore
-    @ToString.Exclude Set<CitadoModel> citado;
+    @JsonIgnore @ToString.Exclude @Setter(AccessLevel.NONE) // don't create it
+    Set<CitadoModel> citado = new HashSet<>();;
+    
+    public void setCitado(Set<CitadoModel> newCitado){
+        this.citado.addAll(newCitado);
+    }
 }

@@ -23,11 +23,15 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -46,7 +50,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Cache(
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
-public @Data @AllArgsConstructor @NoArgsConstructor class CitaModel {
+public @Data @AllArgsConstructor @NoArgsConstructor  class CitaModel {
     @Id
     @Column(unique = false, nullable = false, name = "Fecha_cita")
     @JsonFormat( shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy HH:mm")
@@ -56,9 +60,12 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitaModel {
     private LocalDateTime fechadelete;
     
     @OneToMany(mappedBy = "cita", orphanRemoval = true) // name attribute in citado
-    @JsonIgnore
-    @ToString.Exclude Set<CitadoModel> citado;
+    @JsonIgnore @ToString.Exclude @Setter(AccessLevel.NONE) // don't create it
+    Set<CitadoModel> citado = new HashSet<>();;
 
+    public void setCitado(Set<CitadoModel> newCitado){
+        this.citado.addAll(newCitado);
+    }
 }
 
 
