@@ -43,14 +43,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RestApi {
 
     @Autowired
-    CitaService citas; 
-    @Autowired
-    VehiculoService vehiculos;
-    @Autowired
     CitadoService citados;
     
     //GetMethods (all)
-
+    /*
     @GetMapping()
     public List<CitadoModel> getCitados(){
         System.out.println("before: " +this.citados.getBeforeCita(LocalDateTime.now(), 2));
@@ -61,11 +57,11 @@ public class RestApi {
         }catch(Exception e){
             System.out.println(e);
             return null;
-        }
-        
+        }       
     }
-
+    */
     //GetMethods (just one)_______________________________________________________
+    /*
     @GetMapping(path = "{fecha}/{placa}") /// necesito editar
     public Optional<CitadoModel> getCitadosById(
       @DateTimeFormat(pattern="dd-MM-yyyy_HH:mm") @PathVariable("fecha") LocalDateTime cita,
@@ -74,6 +70,15 @@ public class RestApi {
         CitadoKey key = new CitadoKey(cita, placas);
         System.err.println(key);
         return this.citados.getById(key);
+    }
+    */
+    @GetMapping(path = "{nombre}") /// necesito editar
+    public List<CitadoModel> getCitadosById(
+      @PathVariable("nombre") String nombre
+    ) { 
+        this.citados.deleteCitados(this.citados.findAfter15Min());
+        System.err.println(nombre);
+        return this.citados.getByNombre(nombre);
     }
     //________________________________________________________________________
     

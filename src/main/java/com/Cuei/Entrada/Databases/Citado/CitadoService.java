@@ -78,9 +78,6 @@ public class CitadoService {
         }
         return isEmpty;      
     }
-
-   
-    
     public List<CitadoKey> findAfter15Min(){
         try{
             return this.citado.findIdByFechadelete(LocalDateTime.now());
@@ -89,5 +86,7 @@ public class CitadoService {
         } 
     }
 
-
+    public List<CitadoModel> getByNombre(String name){
+        return this.citado.findByNombre(name);
+    }
 }

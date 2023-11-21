@@ -37,6 +37,8 @@ public interface CitadoRepository extends JpaRepository<CitadoModel,CitadoKey>{
     public abstract List<CitadoKey> findIdByFechadelete(LocalDateTime fechaReal);
 
     public abstract void deleteByIdIn(List <CitadoKey> Ids);
+    
+    List<CitadoModel> findByNombre(String name);
 
 
 
