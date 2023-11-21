@@ -9,8 +9,10 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 /**
  *
  * @author josue
@@ -29,6 +31,9 @@ public interface CitadoRepository extends JpaRepository<CitadoModel,CitadoKey>{
     @Query("select u from CitadoModel u where u.cita.fecha < ?1 and u.entrada = ?2 order by u.cita.fecha asc")
     List<CitadoModel> findAfterCita(LocalDateTime fechaReal, int entrada);
     
-    @Query("delete from CitadoModel u where u.cita.fechadelete <= ?1")
-    List<CitadoModel> deleteCitaDelete(LocalDateTime fechaReal);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM CitadoModel u where u.cita.fechadelete <=:fechaReal")
+    void deleteCitadelete(@Param("fechaReal")LocalDateTime fechaReal);
+
 }

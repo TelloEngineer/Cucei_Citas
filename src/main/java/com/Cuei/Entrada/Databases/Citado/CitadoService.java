@@ -57,9 +57,9 @@ public class CitadoService {
         return this.citado.findBeforeCita(fechaActual.minusMinutes(1), entrada);
     }
     public List<CitadoModel> getAfterCita(LocalDateTime fechaActual, int entrada){
-        return this.citado.findBeforeCita(fechaActual.minusMinutes(1), entrada);
+        return this.citado.findAfterCita(fechaActual.minusMinutes(1), entrada);
     }
     public void deleteAfter15Min(){
-        System.out.println(this.citado.deleteCitaDelete(LocalDateTime.now()));
+        this.citado.deleteCitadelete(LocalDateTime.now());
     }
 }

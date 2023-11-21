@@ -60,7 +60,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </tr>
                 </tbody>
             </table>
-            
+            <table class="table table-striped table-hover" id="table2">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="text-center">Pasados</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${tolerancia.isEmpty()}">
+                        <td class="text-center" colspan="3">No hay citas</td>
+                    </tr>
+                    <tr th:each="citado : ${tolerancia}"> 
+                        <td> 
+                            <a> <b>Nombre del citado:</b> <small th:utext="${citado.nombre}">Nombre</small> </a>
+                            <br>
+                            <a> <b>Placas del vehiculo:</b> <small th:utext="${citado.getVehiculo().placas}">Placa</small> </a>
+                            <br>
+                            <a> <b>Fecha de la cita:</b> <small th:utext="${citado.getCita().getFecha().toLocalDate()}">Fecha</small> </a>
+                            <br>
+                            <a> <b>Hora de la cita:</b> <small th:utext="${citado.getCita().getFecha().toLocalTime()}">Hora</small> </a>
+                            <br>
+                            <a> <b>Marca del vehiculo:</b> <small th:utext="${citado.getVehiculo().marca}">Marca</small> </a>
+                            <br>
+                            <a> <b>Color del vehiculo:</b> <small th:utext="${citado.getVehiculo().color}">Color</small> </a>
+                            <br>
+                            <a> <b>Tipo del vehiculo:</b> <small th:utext="${citado.getVehiculo().tipo}">Tipo</small> </a>
+                            <br>
+                        </td> 
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </body>
 </html>

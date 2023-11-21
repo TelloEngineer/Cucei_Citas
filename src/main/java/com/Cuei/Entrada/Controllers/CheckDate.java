@@ -27,9 +27,9 @@ public class CheckDate {
     
     @GetMapping("/Entrada")
     public String entrada(Model model, @RequestParam int n) {
-        
-        this.n = n;
         this.deleteLateAppointment();
+        this.n = n;
+        //this.deleteLateAppointment();
         LocalDateTime now = LocalDateTime.now();
         model.addAttribute("citados", citados.getBeforeCita(now,this.n));
         model.addAttribute("tolerancia", citados.getAfterCita(now,this.n));
