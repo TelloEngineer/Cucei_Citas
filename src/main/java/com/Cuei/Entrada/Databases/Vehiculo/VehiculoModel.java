@@ -41,7 +41,7 @@ public @Data @AllArgsConstructor @NoArgsConstructor class VehiculoModel {
     @Column(unique = false, nullable = false, name = "tipo_vehiculo")
     private String tipo;
     
-    @OneToMany(mappedBy = "vehiculo") // name attribute in citado
+    @OneToMany(mappedBy = "vehiculo", orphanRemoval = true) // name attribute in citado
     @JsonIgnore
     @ToString.Exclude Set<CitadoModel> citado;
 }

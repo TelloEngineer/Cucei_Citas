@@ -50,14 +50,14 @@ public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
     private int entrada;
 
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "placa_vehiculo") //se crea una columna, donde se guarda el foreign key
     private VehiculoModel vehiculo; //relacion many(citas) to one (vehiculo) 
     
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="cita_fecha", referencedColumnName="Fecha_cita")

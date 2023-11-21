@@ -55,6 +55,7 @@ public class CitadoService {
             this.citado.delete(entity.get());
             return true;
         }catch(Exception error){
+            System.out.println("______--------"+error.getMessage());
             return false;
         }   
     }
