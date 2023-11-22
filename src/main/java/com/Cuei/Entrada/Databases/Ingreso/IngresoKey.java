@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.Cuei.Entrada.Databases.Citado;
+package com.Cuei.Entrada.Databases.Ingreso;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Embeddable;
@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
  * @author josue
  */
 @Embeddable
-public @Data @AllArgsConstructor @NoArgsConstructor class CitadoKey implements Serializable{
+public @Data @AllArgsConstructor @NoArgsConstructor class IngresoKey implements Serializable{
     @JsonFormat( shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy HH:mm")
     LocalDateTime cita; //debe tener el mismo nombre, que la relacion
-    String vehiculo; //debe tener el mismo nombre, que la relacion
+    String citado; //debe tener el mismo nombre, que la relacion
 }

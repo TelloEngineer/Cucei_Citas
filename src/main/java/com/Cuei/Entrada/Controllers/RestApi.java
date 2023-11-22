@@ -7,11 +7,12 @@ package com.Cuei.Entrada.Controllers;
 
 import com.Cuei.Entrada.Databases.Cita.CitaModel;
 import com.Cuei.Entrada.Databases.Cita.CitaService;
-import com.Cuei.Entrada.Databases.Citado.CitadoKey;
-import com.Cuei.Entrada.Databases.Citado.CitadoModel;
-import com.Cuei.Entrada.Databases.Citado.CitadoService;
-import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
-import com.Cuei.Entrada.Databases.Vehiculo.VehiculoService;
+import com.Cuei.Entrada.Databases.Citado.VehiculoModel;
+import com.Cuei.Entrada.Databases.Citado.VehiculoService;
+import com.Cuei.Entrada.Databases.Ingreso.CitadoKey;
+import com.Cuei.Entrada.Databases.Ingreso.CitadoModel;
+import com.Cuei.Entrada.Databases.Ingreso.CitadoService;
+
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;

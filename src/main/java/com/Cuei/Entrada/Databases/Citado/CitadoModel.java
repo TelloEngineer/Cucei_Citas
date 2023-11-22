@@ -4,26 +4,21 @@
  */
 package com.Cuei.Entrada.Databases.Citado;
 
-import com.Cuei.Entrada.Databases.Cita.CitaModel;
-import com.Cuei.Entrada.Databases.Vehiculo.VehiculoModel;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.CascadeType;
-
+import com.Cuei.Entrada.Databases.Ingreso.IngresoModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NaturalIdCache;
@@ -39,27 +34,20 @@ import org.hibernate.annotations.NaturalIdCache;
     usage = CacheConcurrencyStrategy.READ_WRITE
 )
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
+    @Id @Column(unique = true, nullable = false, name = "identificador_citado")
+    private String identificador; //puede ser sus placas, o su nombre
+    @Column(unique = false, nullable = false, name = "marca_citado")
+    private String marca; // si es un vehiculo
+    @Column(unique = false, nullable = false, name = "color_citado")
+    private String color; // si es un vehiculo
+    @Column(unique = false, nullable = false, name = "tipo_citado")
+    private String tipo; // persona o vehiculo.
     
-    @EmbeddedId
-    private CitadoKey id;
+    @OneToMany(mappedBy = "citado", orphanRemoval = true) // name attribute in ingreso
+    @JsonIgnore @ToString.Exclude @Setter(AccessLevel.NONE) // don't create it
+    Set<IngresoModel> ingreso = new HashSet<>();;
     
-    @Column(unique = false, nullable = false, name = "nombre_persona")
-    private String nombre;
-
-    @Column(unique = false, nullable = false, name = "puerta_entrada")
-    private int entrada;
-
-    
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "placa_vehiculo") //se crea una columna, donde se guarda el foreign key
-    private VehiculoModel vehiculo; //relacion many(citas) to one (vehiculo) 
-    
-    
-    @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    //@OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="cita_fecha", referencedColumnName="Fecha_cita")
-    private CitaModel cita; //relacion many(citas) to one (vehiculo) 
+    public void setCitado(Set<IngresoModel> newIngreso){
+        this.ingreso.addAll(newIngreso);
+    }
 }
