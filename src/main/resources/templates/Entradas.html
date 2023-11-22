@@ -37,24 +37,22 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:if="${citados.isEmpty()}">
+                    <tr th:if="${ingresos.isEmpty()}">
                         <td class="text-center" colspan="3" >No hay citas</td>
                     </tr>
-                    <tr th:each="citado : ${citados}"> 
-                        <td > 
-                            <a> <b>Nombre del citado:</b> <small th:utext="${citado.nombre}">Nombre</small> </a>
+                    <tr th:each="ingreso : ${ingresos}"> 
+                        <td >
+                            <a> <b>Identificador del citado:</b> <small th:utext="${ingreso.getCitado().getIdentificador()}">Placa</small> </a>
                             <br>
-                            <a> <b>Placas del vehiculo:</b> <small th:utext="${citado.getVehiculo().placas}">Placa</small> </a>
+                            <a> <b>Fecha de la cita:</b> <small th:utext="${ingreso.getCita().getFecha().toLocalDate()}">Fecha</small> </a>
                             <br>
-                            <a> <b>Fecha de la cita:</b> <small th:utext="${citado.getCita().getFecha().toLocalDate()}">Fecha</small> </a>
+                            <a> <b>Hora de la cita:</b> <small th:utext="${ingreso.getCita().getFecha().toLocalTime()}">Hora</small> </a>
                             <br>
-                            <a> <b>Hora de la cita:</b> <small th:utext="${citado.getCita().getFecha().toLocalTime()}">Hora</small> </a>
+                            <a> <b>Marca de citado:</b> <small th:utext="${ingreso.getCitado().marca}">Marca</small> </a>
                             <br>
-                            <a> <b>Marca del vehiculo:</b> <small th:utext="${citado.getVehiculo().marca}">Marca</small> </a>
+                            <a> <b>Color de citado:</b> <small th:utext="${ingreso.getCitado().color}">Color</small> </a>
                             <br>
-                            <a> <b>Color del vehiculo:</b> <small th:utext="${citado.getVehiculo().color}">Color</small> </a>
-                            <br>
-                            <a> <b>Tipo del vehiculo:</b> <small th:utext="${citado.getVehiculo().tipo}">Tipo</small> </a>
+                            <a> <b>Tipo de citado:</b> <small th:utext="${ingreso.getCitado().tipo}">Tipo</small> </a>
                             <br>
                         </td> 
                     </tr>
@@ -70,21 +68,19 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <tr th:if="${tolerancia.isEmpty()}">
                         <td class="text-center" colspan="3">No hay citas</td>
                     </tr>
-                    <tr th:each="citado : ${tolerancia}"> 
+                    <tr th:each="ingreso : ${tolerancia}"> 
                         <td> 
-                            <a> <b>Nombre del citado:</b> <small th:utext="${citado.nombre}">Nombre</small> </a>
+                            <a> <b>Identificador del citado:</b> <small th:utext="${ingreso.getCitado().getIdentificador()}">Placa</small> </a>
                             <br>
-                            <a> <b>Placas del vehiculo:</b> <small th:utext="${citado.getVehiculo().placas}">Placa</small> </a>
+                            <a> <b>Fecha de la cita:</b> <small th:utext="${ingreso.getCita().getFecha().toLocalDate()}">Fecha</small> </a>
                             <br>
-                            <a> <b>Fecha de la cita:</b> <small th:utext="${citado.getCita().getFecha().toLocalDate()}">Fecha</small> </a>
+                            <a> <b>Hora de la cita:</b> <small th:utext="${ingreso.getCita().getFecha().toLocalTime()}">Hora</small> </a>
                             <br>
-                            <a> <b>Hora de la cita:</b> <small th:utext="${citado.getCita().getFecha().toLocalTime()}">Hora</small> </a>
+                            <a> <b>Marca de citado:</b> <small th:utext="${ingreso.getCitado().marca}">Marca</small> </a>
                             <br>
-                            <a> <b>Marca del vehiculo:</b> <small th:utext="${citado.getVehiculo().marca}">Marca</small> </a>
+                            <a> <b>Color de citado:</b> <small th:utext="${ingreso.getCitado().color}">Color</small> </a>
                             <br>
-                            <a> <b>Color del vehiculo:</b> <small th:utext="${citado.getVehiculo().color}">Color</small> </a>
-                            <br>
-                            <a> <b>Tipo del vehiculo:</b> <small th:utext="${citado.getVehiculo().tipo}">Tipo</small> </a>
+                            <a> <b>Tipo de citado:</b> <small th:utext="${ingreso.getCitado().tipo}">Tipo</small> </a>
                             <br>
                         </td> 
                     </tr>

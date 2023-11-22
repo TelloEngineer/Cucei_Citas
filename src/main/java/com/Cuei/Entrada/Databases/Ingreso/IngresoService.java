@@ -17,21 +17,21 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class CitadoService {
+public class IngresoService {
     @Autowired
     IngresoRepository ingreso;
     public IngresoModel getcitado(IngresoKey id){
         return this.ingreso.getReferenceById(id);
     }
 
-    public List<IngresoModel> getcitados(){
+    public List<IngresoModel> getIngresos(){
         return  this.ingreso.findAll();
     }
      public Optional<IngresoModel> getById(IngresoKey id){
         return this.ingreso.findById(id);
     }
     
-    public IngresoModel saveCitado(IngresoModel ingreso){
+    public IngresoModel saveIngreso(IngresoModel ingreso){
         ///setting automate values.
         //Set fecha to delete
         ingreso.getCita().setFechadelete(ingreso.getCita().getFecha().with(ingreso.getCita().getFecha().toLocalTime().plusMinutes(15)));
@@ -42,7 +42,7 @@ public class CitadoService {
         return this.ingreso.save(ingreso);
     }
 
-    public boolean deleteCitado(IngresoKey id){
+    public boolean deleteIngreso(IngresoKey id){
         Optional<IngresoModel> entity;
         entity = this.ingreso.findById(id);
         System.out.println(entity);
@@ -66,7 +66,7 @@ public class CitadoService {
         return this.ingreso.findAfterCita(fechaActual.minusMinutes(4), entrada);
     }
     @Transactional
-    public boolean deleteCitados(List <IngresoKey> ids){
+    public boolean deleteIngresos(List <IngresoKey> ids){
         if(ids == null){
             return false;
         }
@@ -84,8 +84,8 @@ public class CitadoService {
         } 
     }
 
-    public List<IngresoModel> getByNombre(String name){
-        return this.ingreso.findByNombre(name);
+    public List<IngresoModel> getByIdentificador(String Identificador){
+        return this.ingreso.findByCitado_identificador(Identificador);
     }
     
 }

@@ -5,18 +5,12 @@
 package com.Cuei.Entrada.Controllers;
 
 
-import com.Cuei.Entrada.Databases.Cita.CitaModel;
-import com.Cuei.Entrada.Databases.Cita.CitaService;
-import com.Cuei.Entrada.Databases.Citado.VehiculoModel;
-import com.Cuei.Entrada.Databases.Citado.VehiculoService;
-import com.Cuei.Entrada.Databases.Ingreso.CitadoKey;
-import com.Cuei.Entrada.Databases.Ingreso.CitadoModel;
-import com.Cuei.Entrada.Databases.Ingreso.CitadoService;
+import com.Cuei.Entrada.Databases.Ingreso.IngresoKey;
+import com.Cuei.Entrada.Databases.Ingreso.IngresoModel;
+import com.Cuei.Entrada.Databases.Ingreso.IngresoService;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,16 +38,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RestApi {
 
     @Autowired
-    CitadoService citados;
+    IngresoService ingresos;
     
     //GetMethods (all)
     
     @GetMapping()
-    public List<CitadoModel> getCitados(){
-        System.out.println("before: " +this.citados.getBeforeCita(LocalDateTime.now(), 2));
-        System.out.println("after: "+this.citados.getAfterCita(LocalDateTime.now(), 2));
+    public List<IngresoModel> getIngresos(){
+        System.out.println("before: " +this.ingresos.getBeforeCita(LocalDateTime.now(), 2));
+        System.out.println("after: "+this.ingresos.getAfterCita(LocalDateTime.now(), 2));
         try{
-           List<CitadoModel> list = this.citados.getcitados();
+           List<IngresoModel> list = this.ingresos.getIngresos();
            return list; 
         }catch(Exception e){
             System.out.println(e);
@@ -70,28 +64,28 @@ public class RestApi {
     ) { 
         CitadoKey key = new CitadoKey(cita, placas);
         System.err.println(key);
-        return this.citados.getById(key);
+        return this.ingresos.getById(key);
     }
     */
-    @GetMapping(path = "{nombre}") /// necesito editar
-    public List<CitadoModel> getCitadosById(
-      @PathVariable("nombre") String nombre
+    @GetMapping(path = "{identificador}") /// necesito editar  
+    public List<IngresoModel> getIngresosByCitado(
+      @PathVariable("identificador") String identificador
     ) { 
-        this.citados.deleteCitados(this.citados.findAfter15Min());
-        System.err.println(nombre);
-        return this.citados.getByNombre(nombre);
+        this.ingresos.deleteIngresos(this.ingresos.findAfter15Min());
+        System.err.println(identificador);
+        return this.ingresos.getByIdentificador(identificador);
     }
     //________________________________________________________________________
     
     //Post Methods_____________________________________________________________________________
     
     @PostMapping()
-    public Response saveCitado(
-        @RequestBody CitadoModel citado
+    public Response saveIngreso(
+        @RequestBody IngresoModel ingreso
     ){
         try{
-            System.out.println(citado.getCita().getFechadelete());
-            this.citados.saveCitado(citado);
+            System.out.println(ingreso.getCita().getFechadelete());
+            this.ingresos.saveIngreso(ingreso);
             return new Response(0, "cita guardada con exito");
         }catch(Exception e){
             return new Response(2, e.getMessage());
@@ -102,17 +96,17 @@ public class RestApi {
     ///______________________________________________________________________
     //Delete Methods_________________________________________________________
    
-    @DeleteMapping(path = "{fecha}/{placa}") 
-    public Response deleteCitadoById(
+    @DeleteMapping(path = "{fecha}/{identificador}") 
+    public Response deleteIngresoById(
       @DateTimeFormat(pattern="dd-MM-yyyy_HH:mm") @PathVariable("fecha") LocalDateTime cita,
-      @PathVariable("placa") String placas
+      @PathVariable("identificador") String identificadores
     ) { 
-        CitadoKey id = new CitadoKey(cita, placas);
-        boolean ok = this.citados.deleteCitado(id);
+        IngresoKey id = new IngresoKey(cita, identificadores);
+        boolean ok = this.ingresos.deleteIngreso(id);
         if(ok){            
-            return new Response(0, "Se elimino la cita del: " + id.getCita() + '\n' +" con las placas: " + id.getVehiculo());
+            return new Response(0, "Se elimino la cita del: " + id.getCita() + '\n' +" con las identificadores: " + id.getCitado());
         }else{
-            return new Response(2, "No se encontro la cita del: " + id.getCita() +  "con las placas: " + id.getVehiculo() + " para elminar");
+            return new Response(2, "No se encontro la cita del: " + id.getCita() +  "con las identificadores: " + id.getCitado() + " para elminar");
         }
     }
     ///_________________________________________________________________________

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
-
-import com.Cuei.Entrada.Databases.Ingreso.CitadoService;
+import com.Cuei.Entrada.Databases.Ingreso.IngresoService;
 
 /**
  *
@@ -24,7 +22,7 @@ public class CheckDate {
     private int n;
     
     @Autowired
-    CitadoService citados;
+    IngresoService ingresos;
     
     @GetMapping("/Entrada")
     public String entrada(Model model, @RequestParam int n) {
@@ -32,16 +30,16 @@ public class CheckDate {
         this.n = n;
         //this.deleteLateAppointment();
         LocalDateTime now = LocalDateTime.now();
-        model.addAttribute("citados", citados.getBeforeCita(now,this.n));
-        model.addAttribute("tolerancia", citados.getAfterCita(now,this.n));
+        model.addAttribute("ingresos", ingresos.getBeforeCita(now,this.n));
+        model.addAttribute("tolerancia", ingresos.getAfterCita(now,this.n));
         return "Entradas";
     }
     
     //@Scheduled(cron = "0 */1 * ? * *")
 
     private void deleteLateAppointment(){
-        System.out.println(this.citados.findAfter15Min());
-        this.citados.deleteCitados(this.citados.findAfter15Min());
+        System.out.println(this.ingresos.findAfter15Min());
+        this.ingresos.deleteIngresos(this.ingresos.findAfter15Min());
     }
 
     /*@Scheduled(fixedRate = 500)

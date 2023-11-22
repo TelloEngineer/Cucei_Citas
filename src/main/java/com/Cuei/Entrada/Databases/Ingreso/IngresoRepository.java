@@ -33,7 +33,7 @@ public interface IngresoRepository extends JpaRepository<IngresoModel,IngresoKey
 
     public abstract void deleteByIdIn(List <IngresoKey> Ids);
     
-    List<IngresoModel> findByNombre(String name);
+    List<IngresoModel> findByCitado_identificador(String identificador);
 
 
 
