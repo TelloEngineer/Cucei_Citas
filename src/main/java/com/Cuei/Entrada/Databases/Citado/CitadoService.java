@@ -62,10 +62,10 @@ public class CitadoService {
     
     //Custom_________________________________________________________
     public List<CitadoModel> getBeforeCita(LocalDateTime fechaActual, int entrada){
-        return this.citado.findBeforeCita(fechaActual.minusMinutes(1), entrada);
+        return this.citado.findBeforeCita(fechaActual.minusMinutes(4), entrada);
     }
     public List<CitadoModel> getAfterCita(LocalDateTime fechaActual, int entrada){
-        return this.citado.findAfterCita(fechaActual.minusMinutes(1), entrada);
+        return this.citado.findAfterCita(fechaActual.minusMinutes(4), entrada);
     }
     @Transactional
     public boolean deleteCitados(List <CitadoKey> ids){

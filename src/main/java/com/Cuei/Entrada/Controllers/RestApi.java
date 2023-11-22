@@ -91,7 +91,7 @@ public class RestApi {
         try{
             System.out.println(citado.getCita().getFechadelete());
             this.citados.saveCitado(citado);
-            return new Response(0, "citado guardada con exito");
+            return new Response(0, "cita guardada con exito");
         }catch(Exception e){
             return new Response(2, e.getMessage());
         }
