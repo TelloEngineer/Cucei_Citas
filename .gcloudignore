@@ -1,0 +1,13 @@
+.apt_generated
+.apt_generated_tests
+.gradle
+.settings
+.vscode
+bin
+build
+gradle
+.classpath
+.project
+consulta.txt
+gradlew
+gradlew.bat
