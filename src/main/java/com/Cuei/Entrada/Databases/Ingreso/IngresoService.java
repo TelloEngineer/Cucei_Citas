@@ -6,7 +6,6 @@ package com.Cuei.Entrada.Databases.Ingreso;
 
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +34,7 @@ public class IngresoService {
     public IngresoModel saveIngreso(IngresoModel ingreso){
         ///setting automate values.
         //Set fecha to delete
-        ingreso.getCita().setFechadelete(ingreso.getCita().getFecha().with(ingreso.getCita().getFecha().toLocalTime().plusMinutes(15)));
+        ingreso.getCita().setFechadelete(ingreso.getCita().getFecha().plusMinutes(15));
         //Set Id
         ingreso.setId(new IngresoKey(ingreso.getCita().getFecha(), ingreso.getCitado().getIdentificador()));
         System.out.println(ingreso.getId());
@@ -76,10 +75,9 @@ public class IngresoService {
         }
         return isEmpty;      
     }
-    public List<IngresoKey> findAfter15Min(){
+    public List<IngresoKey> findByDate(LocalDateTime now){
         try{
-            return this.ingreso.findIdByFechadelete(LocalDateTime.now().atZone(ZoneId.systemDefault())
-                .withZoneSameInstant(ZoneId.of("America/Mexico_City")).toLocalDateTime());
+            return this.ingreso.findIdByFechadelete(now);
         }catch(Exception error){
             return null;
         } 

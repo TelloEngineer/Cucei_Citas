@@ -28,7 +28,7 @@ import org.hibernate.annotations.NaturalIdCache;
  * @author josue
  */
 @Entity
-@Table(name ="Ingreso")
+@Table(name ="ingreso")
 @NaturalIdCache
 @Cache(
     usage = CacheConcurrencyStrategy.READ_WRITE

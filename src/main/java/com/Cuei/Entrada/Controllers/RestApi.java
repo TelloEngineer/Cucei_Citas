@@ -45,10 +45,6 @@ public class RestApi {
     
     @GetMapping()
     public List<IngresoModel> getIngresos(){
-         LocalDateTime now = LocalDateTime.now().atZone(ZoneId.systemDefault())
-                .withZoneSameInstant(ZoneId.of("America/Mexico_City")).toLocalDateTime();
-        System.out.println("before: " +this.ingresos.getBeforeCita(now, 2));
-        System.out.println("after: "+this.ingresos.getAfterCita(now, 2));
         try{
            List<IngresoModel> list = this.ingresos.getIngresos();
            return list; 
@@ -74,7 +70,8 @@ public class RestApi {
     public List<IngresoModel> getIngresosByCitado(
       @PathVariable("identificador") String identificador
     ) { 
-        this.ingresos.deleteIngresos(this.ingresos.findAfter15Min());
+        this.ingresos.deleteIngresos(this.ingresos.findByDate(LocalDateTime.now().atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneId.of("America/Mexico_City")).toLocalDateTime()));
         System.err.println(identificador);
         return this.ingresos.getByIdentificador(identificador);
     }
