@@ -10,6 +10,7 @@ import com.Cuei.Entrada.Databases.Ingreso.IngresoModel;
 import com.Cuei.Entrada.Databases.Ingreso.IngresoService;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,8 +45,10 @@ public class RestApi {
     
     @GetMapping()
     public List<IngresoModel> getIngresos(){
-        System.out.println("before: " +this.ingresos.getBeforeCita(LocalDateTime.now(), 2));
-        System.out.println("after: "+this.ingresos.getAfterCita(LocalDateTime.now(), 2));
+         LocalDateTime now = LocalDateTime.now().atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneId.of("America/Mexico_City")).toLocalDateTime();
+        System.out.println("before: " +this.ingresos.getBeforeCita(now, 2));
+        System.out.println("after: "+this.ingresos.getAfterCita(now, 2));
         try{
            List<IngresoModel> list = this.ingresos.getIngresos();
            return list; 
@@ -84,7 +87,6 @@ public class RestApi {
         @RequestBody IngresoModel ingreso
     ){
         try{
-            System.out.println(ingreso.getCita().getFechadelete());
             this.ingresos.saveIngreso(ingreso);
             return new Response(0, "cita guardada con exito");
         }catch(Exception e){

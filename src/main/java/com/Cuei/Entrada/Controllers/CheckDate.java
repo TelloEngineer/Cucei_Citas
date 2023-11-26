@@ -6,6 +6,8 @@ package com.Cuei.Entrada.Controllers;
 
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +31,8 @@ public class CheckDate {
         this.deleteLateAppointment();
         this.n = n;
         //this.deleteLateAppointment();
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now().atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneId.of("America/Mexico_City")).toLocalDateTime();
         model.addAttribute("ingresos", ingresos.getBeforeCita(now,this.n));
         model.addAttribute("tolerancia", ingresos.getAfterCita(now,this.n));
         return "Entradas";
@@ -38,7 +41,7 @@ public class CheckDate {
     //@Scheduled(cron = "0 */1 * ? * *")
 
     private void deleteLateAppointment(){
-        System.out.println(this.ingresos.findAfter15Min());
+        System.out.println("after 15 min: " + this.ingresos.findAfter15Min());
         this.ingresos.deleteIngresos(this.ingresos.findAfter15Min());
     }
 
