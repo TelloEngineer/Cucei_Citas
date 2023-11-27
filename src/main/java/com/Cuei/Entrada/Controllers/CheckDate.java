@@ -35,12 +35,14 @@ public class CheckDate {
         this.n = n;
         model.addAttribute("ingresos", ingresos.getBeforeCita(now,this.n));
         model.addAttribute("tolerancia", ingresos.getAfterCita(now,this.n));
+        model.addAttribute("hora", now);
         return "Entradas";
     }
     
     //@Scheduled(cron = "0 */1 * ? * *")
 
     private void deleteLateAppointment(LocalDateTime dateTime){
+        System.out.println(dateTime);
         this.ingresos.deleteIngresos(this.ingresos.findByDate(dateTime));
     }
 

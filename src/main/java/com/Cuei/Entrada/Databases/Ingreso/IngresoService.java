@@ -69,6 +69,7 @@ public class IngresoService {
         if(ids == null){
             return false;
         }
+        System.out.println(ids);
         boolean isEmpty = ids.isEmpty();
         if(!isEmpty){
            this.ingreso.deleteByIdIn(ids); 

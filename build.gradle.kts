@@ -31,9 +31,11 @@ dependencies {
         implementation("org.springframework.boot:spring-boot-starter-web")
         // https://mvnrepository.com/artifact/joda-time/joda-time
         implementation("joda-time:joda-time:2.12.5")
-        implementation("org.springframework.cloud:spring-cloud-gcp-starter-sql-mysql:1.2.8.RELEASE")
+        runtimeOnly("com.mysql:mysql-connector-j")
+        // https://mvnrepository.com/artifact/com.google.cloud.sql/mysql-socket-factory-connector-j-8
+        implementation("com.google.cloud.sql:mysql-socket-factory-connector-j-8:1.15.0")
 
-	runtimeOnly("com.mysql:mysql-connector-j")
+	
 	//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat") //asi lo corre el servidor
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
