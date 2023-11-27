@@ -41,6 +41,8 @@ public @Data @AllArgsConstructor @NoArgsConstructor class IngresoModel {
     @Column(unique = false, nullable = false, name = "puerta_ingreso")
     private int entrada;
 
+    @Column(unique = false, nullable = false, name = "color_citado")
+    private String color; // si es un vehiculo
     
     @ManyToOne(fetch = FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })

@@ -36,8 +36,7 @@ import org.hibernate.annotations.NaturalIdCache;
 public @Data @AllArgsConstructor @NoArgsConstructor class CitadoModel {
     @Id @Column(unique = true, nullable = false, name = "identificador_citado")
     private String identificador; //puede ser sus placas, o su nombre
-    @Column(unique = false, nullable = false, name = "color_citado")
-    private String color; // si es un vehiculo
+    
     @Column(unique = false, nullable = false, name = "tipo_citado")
     private String tipo; // persona o vehiculo.
     

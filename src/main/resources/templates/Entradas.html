@@ -19,7 +19,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <a class="navbar-brand" href="#">Cucei</a>
         </nav>  
         <script>
-            setInterval(displayHello, 10000);
+            setInterval(displayHello, 100);
             function displayHello() {
                 $("#table1").load(location.href + " #table1");
                 $("#table2").load(location.href + " #table2");
@@ -48,7 +48,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <br>
                             <a> <b>Hora de la cita:</b> <small th:utext="${ingreso.getCita().getFecha().toLocalTime()}">Hora</small> </a>
                             <br>
-                            <a> <b>Color de citado:</b> <small th:utext="${ingreso.getCitado().color}">Color</small> </a>
+                            <a> <b>Color de citado:</b> <small th:utext="${ingreso.color}">Color</small> </a>
                             <br>
                             <a> <b>Tipo de citado:</b> <small th:utext="${ingreso.getCitado().tipo}">Tipo</small> </a>
                             <br>
