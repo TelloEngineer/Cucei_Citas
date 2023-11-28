@@ -29,13 +29,14 @@ public class CheckDate {
     @GetMapping("/Entrada")
     public String entrada(Model model, @RequestParam int n) {
         //this.deleteLateAppointment();
+        String zonaHoraria = "America/Mexico_City";
         LocalDateTime now = LocalDateTime.now().atZone(ZoneId.systemDefault())
-                .withZoneSameInstant(ZoneId.of("America/Mexico_City")).toLocalDateTime();
+                .withZoneSameInstant(ZoneId.of(zonaHoraria)).toLocalDateTime();
         this.deleteLateAppointment(now);
         this.n = n;
         model.addAttribute("ingresos", ingresos.getBeforeCita(now,this.n));
         model.addAttribute("tolerancia", ingresos.getAfterCita(now,this.n));
-        model.addAttribute("hora", now);
+        model.addAttribute("hora", zonaHoraria);
         return "Entradas";
     }
     
