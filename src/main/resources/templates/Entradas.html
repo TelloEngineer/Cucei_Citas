@@ -24,14 +24,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 $("#table1").load(location.href + " #table1");
                 $("#table2").load(location.href + " #table2");
             }
-            setInterval(upload,1);
-            function upload(){
-                $("#hora").load(location.href + " #hora");
-            }
+            
         </script>
 
         <div class="column"> 
-            <h1>lista de citas de entrada <span th:text="${param.n}"></span> <span id="hora" th:text="${hora}"></span> </h1>
+            <h1>lista de citas de entrada <span th:text="${param.n}"></span> </h1>
         </div>
         <div style="display: flex ">
             <table class="table table-striped table-hover" id="table1">
