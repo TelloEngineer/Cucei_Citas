@@ -29,12 +29,24 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             }
             function mueveReloj() {
                 /*<![CDATA[*/
-                    var zona = /*[[${hora}]]*/ 'defaultanyvalue' //para agarrar datos
+                    var zona = "America/Mexico_City" // /*[[${hora}]]*/ 'defaultanyvalue' //para agarrar datos "America/Mexico_City"
                     momentoActual = new Date(new Date().toLocaleString("en-US", { timeZone: zona }))
                 /*]]>*/
                 hora = momentoActual.getHours()
                 minuto = momentoActual.getMinutes()
                 segundo = momentoActual.getSeconds()
+
+                str_segundo = new String(segundo)
+                if (str_segundo.length == 1)
+                    segundo = "0" + segundo
+
+                str_minuto = new String(minuto)
+                if (str_minuto.length == 1)
+                    minuto = "0" + minuto
+
+                str_hora = new String(hora)
+                if (str_hora.length == 1)
+                    hora = "0" + hora
 
                 horaImprimible = hora + " : " + minuto + " : " + segundo
 
@@ -43,11 +55,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             
         </script>
 
-        <div class="column"> 
+        <div style="display: flex; align-items: center; justify-content: space-between;"> 
             <h1>lista de citas de entrada <span th:text="${param.n}"></span> </h1>
             <form name="form_reloj">
-                <input type="text" name="reloj" size="10" onfocus="window.document.form_reloj.reloj.blur()" style="background-color : Black; color : White; font-family : Verdana, Arial, Helvetica; font-size : 18pt; text-align : center;">
-
+                <input type="text" name="reloj" size="10" onfocus="window.document.form_reloj.reloj.blur()"
+                    style="background-color : rgb(22, 140, 148); color : White; font-family : Verdana, Arial, Helvetica; font-size : 18pt; text-align : center;">
             </form>
         </div>
         <div style="display: flex ">
