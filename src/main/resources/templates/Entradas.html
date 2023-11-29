@@ -37,6 +37,9 @@ src="../static/cucei.png"
                 hora = momentoActual.getHours()
                 minuto = momentoActual.getMinutes()
                 segundo = momentoActual.getSeconds()
+                dia = momentoActual.getDate()
+                mes = momentoActual.getMonth()
+                ano = momentoActual.getFullYear()
 
                 str_segundo = new String(segundo)
                 if (str_segundo.length == 1)
@@ -51,8 +54,10 @@ src="../static/cucei.png"
                     hora = "0" + hora
 
                 horaImprimible = hora + " : " + minuto + " : " + segundo
+                fecha = dia + " / " + mes + " / " + ano
 
                 document.form_reloj.reloj.value = horaImprimible
+                document.form_reloj.fecha.value = fecha
             }
             
         </script>
@@ -62,6 +67,9 @@ src="../static/cucei.png"
             <form name="form_reloj">
                 <input type="text" name="reloj" size="10" onfocus="window.document.form_reloj.reloj.blur()"
                     style="background: linear-gradient(rgb(23, 70, 221),rgb(78, 2, 255),rgb(59, 89, 187)); color : White; font-family : Verdana, Arial, Helvetica; font-size : 18pt; text-align : center;">
+                <input type="text" name="fecha" size="10" onfocus="window.document.form_reloj.reloj.blur()"
+                    style="background: linear-gradient(rgb(23, 70, 221),rgb(78, 2, 255),rgb(59, 89, 187)); color : White; font-family :
+                    Verdana, Arial, Helvetica; font-size : 18pt; text-align : center;">
             </form>
         </div>
         <div style="display: flex " >
