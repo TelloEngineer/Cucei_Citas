@@ -2,6 +2,8 @@
 <!--
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+th:src="@{/cucei.png}"
+src="../static/cucei.png"
 -->
 <html>
     <head>
@@ -14,9 +16,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 "https://code.jquery.com/jquery-3.5.0.js">
         </script>
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Cucei</a>
+    <body th:style="'background-image:url(' + @{/Entrada.jpg} + '); background-repeat: no-repeat, repeat; background-size: cover;'" >
+        <nav class="navbar navbar-expand-lg" style="background: linear-gradient(rgb(25, 2, 80),rgb(40, 25, 75),rgb(78, 2, 255)) ">
+            <img th:src="@{/cucei.png}" alt="cucei"  width="100px" height="30px" />
         </nav>  
         <script th:inline="javascript">
             setInterval(function (){
@@ -29,7 +31,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             }
             function mueveReloj() {
                 /*<![CDATA[*/
-                    var zona = "America/Mexico_City" // /*[[${hora}]]*/ 'defaultanyvalue' //para agarrar datos "America/Mexico_City"
+                    var zona = /*[[${hora}]]*/ 'defaultanyvalue' //para agarrar datos "America/Mexico_City"
                     momentoActual = new Date(new Date().toLocaleString("en-US", { timeZone: zona }))
                 /*]]>*/
                 hora = momentoActual.getHours()
@@ -55,26 +57,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             
         </script>
 
-        <div style="display: flex; align-items: center; justify-content: space-between;"> 
-            <h1>lista de citas de entrada <span th:text="${param.n}"></span> </h1>
+        <div style="display: flex; align-items: center; justify-content: space-between; background:linear-gradient(rgb(59, 89, 187),rgb(78, 2, 255))"> 
+            <h1 style="color : black">Lista de citas de entrada <span th:text="${param.n}"></span> </h1>
             <form name="form_reloj">
                 <input type="text" name="reloj" size="10" onfocus="window.document.form_reloj.reloj.blur()"
-                    style="background-color : rgb(22, 140, 148); color : White; font-family : Verdana, Arial, Helvetica; font-size : 18pt; text-align : center;">
+                    style="background: linear-gradient(rgb(23, 70, 221),rgb(78, 2, 255),rgb(59, 89, 187)); color : White; font-family : Verdana, Arial, Helvetica; font-size : 18pt; text-align : center;">
             </form>
         </div>
-        <div style="display: flex ">
+        <div style="display: flex " >
             <table class="table table-striped table-hover" id="table1">
-                <thead class="table-dark">
+                <thead class="table-dark" >
                     <tr>
                         <th class="text-center">Actuales</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:if="${ingresos.isEmpty()}">
-                        <td class="text-center" colspan="3" >No hay citas</td>
+                    <tr th:if="${ingresos.isEmpty()}" style="background-color: rgba(0, 0, 0, 0.308);">
+                        <td class="text-center" colspan="3" style="color: white;">No hay citas</td>
                     </tr>
-                    <tr th:each="ingreso : ${ingresos}"> 
-                        <td >
+                    <tr th:each="ingreso : ${ingresos}" style="background-color: rgba(0, 0, 0, 0.308);"> 
+                        <td style="color: white;">
                             <a> <b>Identificador del citado:</b> <small th:utext="${ingreso.getCitado().getIdentificador()}">Placa</small> </a>
                             <br>
                             <a> <b>Fecha de la cita:</b> <small th:utext="${ingreso.getCita().getFecha().toLocalDate()}">Fecha</small> </a>
@@ -96,11 +98,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:if="${tolerancia.isEmpty()}">
-                        <td class="text-center" colspan="3">No hay citas</td>
+                    <tr th:if="${tolerancia.isEmpty()}" style="background-color: rgba(0, 0, 0, 0.308);">
+                        <td class="text-center" colspan="3" style="color: white;">No hay citas</td>
                     </tr>
-                    <tr th:each="ingreso : ${tolerancia}"> 
-                        <td> 
+                    <tr th:each="ingreso : ${tolerancia}" style="background-color: rgba(0, 0, 0, 0.308);"> 
+                        <td style="color: white;"> 
                             <a> <b>Identificador del citado:</b> <small th:utext="${ingreso.getCitado().getIdentificador()}">Placa</small> </a>
                             <br>
                             <a> <b>Fecha de la cita:</b> <small th:utext="${ingreso.getCita().getFecha().toLocalDate()}">Fecha</small> </a>
